@@ -2,7 +2,7 @@
 
 Customize your player model in Minecraft.
 
-![icon](https://github.com/Gamepiaynmo/CustomPlayerModel/assets/icon.png)
+![icon](assets/icon.png)
 
 #### Description
 
