@@ -1,0 +1,8 @@
+{
+  "LivingRenderer#doRender": "assets/cpm/transformer/LivingRenderer#doRender.js",
+  "PlayerEntity#getSize": "assets/cpm/transformer/PlayerEntity#getSize.js",
+  "LivingEntity#getSize": "assets/cpm/transformer/LivingEntity#getSize.js",
+  "LivingEntity#getEyeHeight": "assets/cpm/transformer/LivingEntity#getEyeHeight.js",
+  "PlayerRenderer#renderLeftArm": "assets/cpm/transformer/PlayerRenderer#renderLeftArm.js",
+  "PlayerRenderer#renderRightArm": "assets/cpm/transformer/PlayerRenderer#renderRightArm.js"
+}
