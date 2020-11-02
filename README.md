@@ -6,7 +6,7 @@ Customize your player model in Minecraft.
 
 #### Description
 
-This is a remaked version of Minecraft mod Custom Player Model (CPM). It allows you to customize ingame models using JSON files, with advanced features including scripting, particle systems and physics simulation.
+This is a remake version of Minecraft mod Custom Player Model (CPM). It allows you to customize ingame models using JSON files, with advanced features including scripting, particle systems and physics simulation.
 
 Note: Although this mod is named Custom "Player" Model, it also allows you to apply custom models on animals or monsters.
 
