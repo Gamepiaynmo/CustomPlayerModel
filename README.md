@@ -20,7 +20,7 @@ Each model is a .zip file. Model files should be put in "custom-model/models" di
 
 **I want some new features / find some bugs!**
 
-You can rise new issues at [github issue tracker](https://github.com/Gamepiaynmo/CustomPlayerModel/issues). Or you can contact me at [Custom Player Model Discord](https://discord.gg/uVT39n5).
+You can rise new issues at [github issue tracker](issues). Or you can contact me at [Custom Player Model Discord](https://discord.gg/uVT39n5).
 
 **Is this mod client side or server side?**
 
