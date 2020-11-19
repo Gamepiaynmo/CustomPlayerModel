@@ -5,16 +5,15 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.client.gui.ModelEntry;
-import com.gpiay.cpm.model.ModelInfo;
-import com.gpiay.cpm.model.ModelLoader;
-import com.gpiay.cpm.model.ModelManager;
-import com.gpiay.cpm.model.ModelPack;
+import com.gpiay.cpm.model.*;
 import com.gpiay.cpm.network.Networking;
 import com.gpiay.cpm.network.QueryModelPacket;
 import com.gpiay.cpm.server.capability.CPMCapability;
 import com.gpiay.cpm.util.exception.TranslatableException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
@@ -69,8 +68,8 @@ public class ClientModelManager extends ModelManager {
         this.cpmClient = cpmClient;
     }
 
-    private LazyOptional<ModelPack> loadModelPack(String modelId) {
-        File modelFile = findModelFile(modelId);
+    private LazyOptional<ModelPack> loadModelPackFromCache(String modelId) {
+        File modelFile = findModelFileFromCache(modelId);
         if (modelFile != null) {
             try {
                 ModelPack modelPack = ModelLoader.fromZipFile(modelId, modelFile);
@@ -104,7 +103,7 @@ public class ClientModelManager extends ModelManager {
         if (res != null)
             return LazyOptional.of(() -> res);
 
-        LazyOptional<ModelPack> opt = loadModelPack(modelId);
+        LazyOptional<ModelPack> opt = loadModelPackFromCache(modelId);
         if (opt.isPresent()) {
             queriedModels.remove(modelId);
             modelPacks.put(modelId, opt.orElseThrow(() -> new RuntimeException("This should never happen.")));
@@ -147,13 +146,33 @@ public class ClientModelManager extends ModelManager {
     static int tickTimer = 0;
     public void tick() {
         if (++tickTimer % 1200 == 0) {
-            Iterator<Map.Entry<String, ModelPack>> iter =  modelPacks.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry<String, ModelPack> entry = iter.next();
-                if (entry.getValue().getRefCnt() <= 0) {
-                    entry.getValue().release();
-                    iter.remove();
+            ClientWorld world = Minecraft.getInstance().world;
+
+            if (world != null) {
+                for (ModelPack modelPack : modelPacks.values())
+                    modelPack.refCnt = 0;
+
+                for (Entity entity : Minecraft.getInstance().world.getAllEntities()) {
+                    entity.getCapability(CPMCapability.CAPABILITY).ifPresent(cap -> {
+                        ModelInstance model = ((ClientCPMCapability) cap).getModel();
+                        if (model != null)
+                            model.getModelPack().refCnt++;
+                    });
                 }
+
+                Iterator<Map.Entry<String, ModelPack>> iter = modelPacks.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry<String, ModelPack> entry = iter.next();
+                    if (entry.getValue().refCnt <= 0) {
+                        entry.getValue().release();
+                        iter.remove();
+                    }
+                }
+            } else {
+                for (ModelPack modelPack : modelPacks.values())
+                    modelPack.release();
+
+                modelPacks.clear();
             }
 
             tickTimer = 0;

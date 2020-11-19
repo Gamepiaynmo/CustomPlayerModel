@@ -12,6 +12,7 @@
   "config.cpm.permission.scaleSelf": "Resize Own Model",
   "config.cpm.permission.scaleOthers": "Resize Other's Model",
   "config.cpm.permission.refreshModels": "Refresh Local Model Files",
+  "config.cpm.permission.models": "Model Permissions",
 
   "text.cpm.modelInfo.id": "ID: %s",
   "text.cpm.modelInfo.name": "Name: %s",
@@ -56,5 +57,12 @@
 
   "gui.cpm.title": "CPM Model Selection",
   "gui.cpm.slider": "Model Size",
-  "gui.cpm.clipboard": "Model ID copied to Clipboard"
+  "gui.cpm.clipboard": "Model ID copied to Clipboard",
+  "gui.cpm.reset": "Reset",
+  "gui.cpm.clear": "Clear",
+  "gui.cpm.model.name": "Name: %s",
+  "gui.cpm.model.version": "Version: %s",
+  "gui.cpm.model.author": "Author: %s",
+  "gui.cpm.model.local": "Local Model",
+  "gui.cpm.model.edit": "Editing"
 }

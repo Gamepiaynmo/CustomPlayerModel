@@ -139,6 +139,7 @@ public class BipedBaseSkeleton<M extends CustomBipedModel> extends Skeleton<M> {
             case LEGGINGS_BODY:
             case CAPE:
                 addBuiltinAttachment(attachment, instance, "body");
+                break;
             case ELYTRA:
                 addBuiltinAttachment(attachment, instance, "none", new Vector3d(0, entityModel.bodyPivotHeight - 24, 0));
                 break;
@@ -157,10 +158,10 @@ public class BipedBaseSkeleton<M extends CustomBipedModel> extends Skeleton<M> {
                 addBuiltinAttachment(attachment, instance, "right_leg");
                 break;
             case ITEM_LEFT:
-                addBuiltinAttachment(attachment, instance, "left_arm", new Vector3d(0, -(entityModel.bodyPivotHeight - entityModel.legLength), 0));
+                addBuiltinAttachment(attachment, instance, "left_arm", new Vector3d(0, -entityModel.armLength, 0));
                 break;
             case ITEM_RIGHT:
-                addBuiltinAttachment(attachment, instance, "right_arm", new Vector3d(0, -(entityModel.bodyPivotHeight - entityModel.legLength), 0));
+                addBuiltinAttachment(attachment, instance, "right_arm", new Vector3d(0, -entityModel.armLength, 0));
                 break;
             case PARROT_LEFT:
                 addBuiltinAttachment(attachment, instance, "none", new Vector3d(entityModel.armInterval / 2 + 1, entityModel.armPivotHeight - 24, 0));

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ModelPack extends ModelInfo {
-    int refCnt = 0;
+    public int refCnt = 0;
 
     EnumSkeleton skeletonType;
     final Map<String, Float> skeletonParam = Maps.newHashMap();
@@ -32,10 +32,6 @@ public class ModelPack extends ModelInfo {
     final Map<HandSide, List<String>> firstPersonBones = Maps.newEnumMap(HandSide.class);
     CompiledScript animScript;
     public float shadowSize = -1;
-
-    public int getRefCnt() {
-        return refCnt;
-    }
 
     void allocateAttachment(EnumAttachment attachment) {
         attachments.computeIfAbsent(attachment, k -> Lists.newArrayList());
@@ -52,7 +48,6 @@ public class ModelPack extends ModelInfo {
     public ModelInstance instantiate(LivingEntity entity) {
         ModelInstance instance = new ModelInstance(this, entity);
         instance.skeleton = skeletonType.instantiate(skeletonParam);
-        refCnt++;
 
         Map<String, BoneInfo> boneInfoMap = Maps.newHashMap();
         for (Map.Entry<String, List<BedrockModel>> entry : modelParts.entrySet()) {

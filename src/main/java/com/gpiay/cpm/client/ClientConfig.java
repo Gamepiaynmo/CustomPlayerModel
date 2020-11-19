@@ -22,7 +22,7 @@ public class ClientConfig {
         HIDE_ARMORS = builder
                 .translation("config.cpm.client.hideArmors")
                 .comment("Hide armors of custom models.")
-                .define("hideArmors", true);
+                .define("hideArmors", false);
 
         SEND_MODELS = builder
                 .translation("config.cpm.client.sendModels")

@@ -24,7 +24,7 @@ public class ServerCPMCapability extends CPMCapability {
         setModelId(modelId, null);
     }
 
-    public void setModelId(@Nonnull String modelId, boolean update) {
+    private void setModelId(@Nonnull String modelId, boolean update) {
         setModelId(modelId, null, update);
     }
 
@@ -32,7 +32,7 @@ public class ServerCPMCapability extends CPMCapability {
         setModelId(modelId, sender, true);
     }
 
-    public void setModelId(@Nonnull String modelId, ServerPlayerEntity sender, boolean update) {
+    private void setModelId(@Nonnull String modelId, ServerPlayerEntity sender, boolean update) {
         if (!this.modelId.equals(modelId)) {
             if (modelId.isEmpty()) {
                 model = null;
@@ -41,6 +41,8 @@ public class ServerCPMCapability extends CPMCapability {
                 CPMMod.cpmServer.modelManager.getModelInfo(modelId, sender).ifPresent(modelInfo -> {
                     model = modelInfo;
                     this.modelId = modelId;
+                    if (update)
+                        this.scale = model.defaultScale;
                 });
             }
 
@@ -55,7 +57,7 @@ public class ServerCPMCapability extends CPMCapability {
         setScale(scale, true);
     }
 
-    public void setScale(double scale, boolean update) {
+    private void setScale(double scale, boolean update) {
         if (scale != this.scale) {
             this.scale = scale;
             if (update)

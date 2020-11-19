@@ -341,7 +341,8 @@ public class ModelInstance {
     }
 
     public void release() {
-        modelPack.refCnt--;
+        for (ParticleEmitterInstance particle : particleEmitters.values())
+            particle.release();
     }
 
     public ModelBone getRandomBone(Random random) {

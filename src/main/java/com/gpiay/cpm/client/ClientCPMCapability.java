@@ -31,7 +31,7 @@ public class ClientCPMCapability extends CPMCapability {
         setScale(scale, true);
     }
 
-    public void setScale(double scale, boolean update) {
+    private void setScale(double scale, boolean update) {
         if (this.scale != scale) {
             this.scale = scale;
             if (update)
@@ -41,8 +41,10 @@ public class ClientCPMCapability extends CPMCapability {
 
     private void setModel(ModelInstance model, boolean update) {
         this.model = model;
-        if (update)
+        if (update) {
+            this.scale = model.getModelPack().defaultScale;
             onModelUpdate();
+        }
     }
 
     @Override
@@ -50,7 +52,7 @@ public class ClientCPMCapability extends CPMCapability {
         setModelId(modelId, true);
     }
 
-    public void setModelId(@Nonnull String modelId, boolean update) {
+    private void setModelId(@Nonnull String modelId, boolean update) {
         if (!this.modelId.equals(modelId)) {
             this.modelId = modelId;
 

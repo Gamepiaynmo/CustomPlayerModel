@@ -38,7 +38,7 @@ public class SlimeSkeleton extends Skeleton<SlimeModel<LivingEntity>> {
 
         if (entity.onGround) {
             if (this.wasOnGround)
-                this.squishAmount = MathHelper.sin((float) squishGround) * (float) motion;
+                this.squishAmount = MathHelper.sin((float) squishGround) * (float) motion / 2;
             else this.squishAmount = -0.5F;
         } else if (this.wasOnGround) {
             this.squishAmount = 1.0F;
@@ -52,20 +52,18 @@ public class SlimeSkeleton extends Skeleton<SlimeModel<LivingEntity>> {
     protected void adjustBones(LivingEntity entity, double scale, float partialTicks, boolean firstPerson) {
         super.adjustBones(entity, scale, partialTicks, firstPerson);
 
-        float size = this.size;
-        if (entity instanceof SlimeEntity)
-            size = ((SlimeEntity) entity).getSlimeSize();
-
-        float f2 = MathHelper.lerp(partialTicks, prevSquishFactor, squishFactor) / (size * 0.5F + 1.0F);
-        if (entity instanceof SlimeEntity) {
-            SlimeEntity slimeEntity = (SlimeEntity) entity;
-            f2 = MathHelper.lerp(partialTicks, slimeEntity.prevSquishFactor, slimeEntity.squishFactor) / (size * 0.5F + 1.0F);
+        if (!(entity instanceof SlimeEntity)) {
+            float size = this.size;
+            float f2 = MathHelper.lerp(partialTicks, prevSquishFactor, squishFactor) / (size * 0.5F + 1.0F);
+            float f3 = 1.0F / (f2 + 1.0F);
+            float yScale = 1.0F / f3 * size;
+            double dy = 24 * (scale * size) - (size - 1) * 24;
+            body.scale(f3 * size, yScale, f3 * size).offset(0, dy, 0);
+            none.scale(f3 * size, yScale, f3 * size).offset(0, dy, 0);
+        } else {
+            body.offset(0, 24 * scale, 0);
+            none.offset(0, 24 * scale, 0);
         }
-
-        float f3 = 1.0F / (f2 + 1.0F);
-        float yScale = 1.0F / f3 * size;
-        body.scale(f3 * size, yScale, f3 * size).offset(0, 24 * scale, 0);
-        none.scale(f3 * size, yScale, f3 * size).offset(0, 24 * scale, 0);
     }
 
     @Override

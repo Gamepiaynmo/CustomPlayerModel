@@ -22,6 +22,9 @@ public class CPMRenderLayer<T extends LivingEntity, M extends EntityModel<T>> ex
 
     @Override
     public void render(T entityIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        if (entityRenderer.shadowSize == lastShadowSize)
+            entityRenderer.shadowSize = initialShadowSize;
+
         entityIn.getCapability(CPMCapability.CAPABILITY).ifPresent(cap -> {
             ModelInstance model = ((ClientCPMCapability) cap).getModel();
             if (model != null) {
@@ -29,17 +32,14 @@ public class CPMRenderLayer<T extends LivingEntity, M extends EntityModel<T>> ex
                     bone.isHidden = false;
                 model.render(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, partialTicks, cap.getScale());
 
-                if (entityRenderer.shadowSize == lastShadowSize)
-                    entityRenderer.shadowSize = initialShadowSize;
-
                 float shadowSize = model.getModelPack().shadowSize;
                 if (shadowSize >= 0)
                     entityRenderer.shadowSize = shadowSize;
                 entityRenderer.shadowSize *= (float) cap.getScale();
-
-                lastShadowSize = entityRenderer.shadowSize;
             }
         });
+
+        lastShadowSize = entityRenderer.shadowSize;
     }
 
     @Override

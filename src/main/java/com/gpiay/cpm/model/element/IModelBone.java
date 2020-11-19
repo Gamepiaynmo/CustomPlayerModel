@@ -16,7 +16,7 @@ public interface IModelBone {
 
     default Quat4d getQuaternion() {
         Vector3d rotation = getRotation();
-        return new Quat4d().setEulerAngles(rotation.x, rotation.y, rotation.z);
+        return new Quat4d().setEulerAngles(rotation.x, rotation.y, 0).mulLeft(new Quat4d().setFromAxis(0, 0, 1, rotation.z));
     }
 
     default Matrix4d getTransform() {

@@ -13,6 +13,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.SliderPercentageOption;
 import net.minecraft.util.text.*;
 import org.lwjgl.glfw.GLFW;
@@ -27,7 +29,9 @@ public class GuiModelSelection extends Screen {
     private final List<ModelEntry> searchResult = Lists.newArrayList();
     private TextFieldWidget searchInput;
     private SliderPercentageOption sliderOption;
-    private Widget slider;
+    private Widget scaleSlider;
+    private Button resetButton;
+    private Button clearButton;
 
     private double sliderPos;
     private boolean sliderUpdated;
@@ -56,7 +60,7 @@ public class GuiModelSelection extends Screen {
             modelIds.add(entry.id);
 
         if (!CPMMod.cpmClient.isServerModded || (ClientConfig.SEND_MODELS.get() && ServerConfig.RECEIVE_MODELS.get())) {
-            for (ModelEntry info : CPMMod.cpmServer.modelManager.getModelList(true))
+            for (ModelEntry info : CPMMod.cpmServer.modelManager.getModelList())
                 if (modelIds.add(info.id))
                     modelList.add(info);
         }
@@ -92,10 +96,15 @@ public class GuiModelSelection extends Screen {
         searchInput.setCanLoseFocus(false);
         this.children.add(searchInput);
 
-        sliderOption = new SliderPercentageOption("gui.cpm.slider", -1, 1, 0.01f, setting -> (double) 0,
+        sliderOption = new SliderPercentageOption("gui.cpm.slider", -0.5, 0.5, 0.01f, setting -> (double) 0,
                 (setting, value) -> updateSlider(value), (setting, percentage) -> String.valueOf(Math.pow(10, percentage.get(setting))));
-        slider = sliderOption.createWidget(minecraft.gameSettings, width / 2 + 50, height / 2 + 50, 100);
-        this.children.add(slider);
+        scaleSlider = sliderOption.createWidget(minecraft.gameSettings, width / 2 + 40, height / 2, 120);
+        this.children.add(scaleSlider);
+
+        this.resetButton = new Button(this.width / 2 + 50, height / 2 + 25, 40, 20, I18n.format("gui.cpm.reset"), button -> resetScale());
+        this.clearButton = new Button(this.width / 2 + 110, height / 2 + 25, 40, 20, I18n.format("gui.cpm.clear"), button -> clearModel());
+        this.addButton(resetButton);
+        this.addButton(clearButton);
 
         updateSearchEntry();
     }
@@ -114,10 +123,13 @@ public class GuiModelSelection extends Screen {
     public void render(int mouseX, int mouseY, float partialTicks) {
         renderBackground();
 
+        int entityX = width / 2 + 100, entityY = height / 2 - 10, deltaY = 0;
+        InventoryScreen.drawEntityOnScreen(entityX, entityY, 50, entityX - mouseX, entityY - mouseY, minecraft.player);
+        scaleSlider.render(mouseX, mouseY, partialTicks);
+
         if (selected >= 0) {
-            int entityX = width / 2 + 100, entityY = height / 2, deltaY = 0;
-            InventoryScreen.drawEntityOnScreen(entityX, entityY, 60, entityX - mouseX, entityY - mouseY, minecraft.player);
-            slider.render(mouseX, mouseY, partialTicks);
+            for (String str : searchResult.get(selected).getModelInfo())
+                drawCenteredString(minecraft.fontRenderer, str, entityX, entityY + 50 + (deltaY += 10), 0xffffffff);
         }
 
         searchInput.render(mouseX, mouseY, partialTicks);
@@ -141,7 +153,7 @@ public class GuiModelSelection extends Screen {
             String str = minecraft.fontRenderer.trimStringToWidth(model.info.getName(), entryWidth - 7);
             if (!str.equals(model.info.getName()))
                 str += "...";
-            int color = model.isLocal ? model.isEditing ? 0xffffff00 : 0xffbfbfbf : 0xffffffff;
+            int color = model.isLocal ? model.isEditing ? 0xffffff55 : 0xffaaaaaa : 0xffffffff;
             drawString(minecraft.fontRenderer, str, left + 1, itemTop + 1, color);
         }
 
@@ -191,7 +203,8 @@ public class GuiModelSelection extends Screen {
                                 cap.setModelId(model.id));
                     }
                 } catch (Exception e) {
-                    ITextComponent text = new StringTextComponent(e.getLocalizedMessage());
+                    String message = e.getLocalizedMessage();
+                    ITextComponent text = new StringTextComponent(message == null ? "" : message);
                     text.getStyle().setColor(TextFormatting.RED);
                     Minecraft.getInstance().ingameGUI.addChatMessage(ChatType.CHAT, text);
                 }
@@ -207,6 +220,20 @@ public class GuiModelSelection extends Screen {
     private void updateSlider(double scale) {
         sliderPos = Math.pow(10, scale);
         sliderUpdated = true;
+    }
+
+    private void resetScale() {
+        sliderPos = 1;
+        sliderUpdated = true;
+    }
+
+    private void clearModel() {
+        if (CPMMod.cpmClient.isServerModded) {
+            sendMessage("/" + CPMMod.MOD_ID + " clear", false);
+        } else {
+            minecraft.player.getCapability(CPMCapability.CAPABILITY).ifPresent(cap ->
+                    cap.setModelId(""));
+        }
     }
 
     @Override

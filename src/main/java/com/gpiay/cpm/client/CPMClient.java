@@ -31,8 +31,12 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
 import net.minecraftforge.fml.network.PacketDistributor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 
 import javax.script.ScriptEngine;
@@ -65,6 +69,9 @@ public class CPMClient {
     public final ScriptEngine scriptEngine;
 
     public CPMClient() {
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
+                () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+
         MinecraftForge.EVENT_BUS.register(this);
 
         ClientRegistry.registerKeyBinding(selectModelKey);
@@ -116,8 +123,9 @@ public class CPMClient {
     public void onClientTick(TickEvent.ClientTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
         ClientWorld world = mc.world;
+        modelManager.tick();
+
         if (world != null && !mc.isGamePaused() && event.phase == TickEvent.Phase.END) {
-            modelManager.tick();
             if (selectModelKey.isPressed()) {
                 if (isServerModded) {
                     Networking.INSTANCE.send(PacketDistributor.SERVER.noArg(), new QueryModelListPacket());

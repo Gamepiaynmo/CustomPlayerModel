@@ -20,16 +20,16 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class ScriptEntity {
-    private static Map<Pose, String> poseNames = Maps.newEnumMap(Pose.class);
+    private static final Map<Pose, String> poseNames = Maps.newEnumMap(Pose.class);
 
-    private LivingEntity entity;
-    private float limbSwing;
-    private float limbSwingAmount;
+    private final LivingEntity entity;
+    private final float limbSwing;
+    private final float limbSwingAmount;
     private float ageInTicks;
-    private float netHeadYaw;
-    private float headPitch;
-    private float partialTicks;
-    private double scale;
+    private final float netHeadYaw;
+    private final float headPitch;
+    private final float partialTicks;
+    private final double scale;
 
     public ScriptEntity(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
                         float headPitch, float scaleFactor, float partialTicks, double scale) {
@@ -45,7 +45,7 @@ public class ScriptEntity {
 
     private <E extends LivingEntity> double as(Class<E> clazz, Function<E, Double> function, double defaultVal) {
         try {
-            return (double) function.apply(clazz.cast(entity));
+            return function.apply(clazz.cast(entity));
         } catch (ClassCastException e) {
             return defaultVal;
         }
@@ -53,7 +53,7 @@ public class ScriptEntity {
 
     private <E extends LivingEntity> boolean as(Class<E> clazz, Function<E, Boolean> function, boolean defaultVal) {
         try {
-            return (boolean) function.apply(clazz.cast(entity));
+            return function.apply(clazz.cast(entity));
         } catch (ClassCastException e) {
             return defaultVal;
         }
@@ -61,7 +61,7 @@ public class ScriptEntity {
 
     public double getLimbSwing() { return limbSwing; }
     public double getLimbSwingAmount() { return limbSwingAmount; }
-    public double getAge() { return ageInTicks; }
+    public double getAge() { return entity.ticksExisted + partialTicks; }
     public double getHeadYaw() { return netHeadYaw; }
     public double getHeadPitch() { return headPitch; }
     public double getPartial() { return partialTicks; }

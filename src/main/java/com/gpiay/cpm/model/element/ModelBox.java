@@ -1,11 +1,15 @@
 package com.gpiay.cpm.model.element;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.model.PositionTextureVertex;
 import net.minecraft.client.renderer.model.TexturedQuad;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModelBox {
-    final TexturedQuad[] quads = new TexturedQuad[6];
+    final List<TexturedQuad> quads = new ArrayList<>(6);
     public final float posX1;
     public final float posY1;
     public final float posZ1;
@@ -43,12 +47,21 @@ public class ModelBox {
         PositionTextureVertex positiontexturevertex5 = new PositionTextureVertex(rx, ry, rz, 8.0F, 8.0F);
         PositionTextureVertex positiontexturevertex6 = new PositionTextureVertex(x, ry, rz, 8.0F, 0.0F);
         PositionTextureVertex positiontexturevertex7 = new PositionTextureVertex(x, y, z, 0.0F, 0.0F);
-        this.quads[0] = new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex4, positiontexturevertex, positiontexturevertex1, positiontexturevertex5}, texU + dz + dx, texV + dz, texU + dz + dx + dz, texV + dz + dy, texW, texH);
-        this.quads[1] = new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex7, positiontexturevertex3, positiontexturevertex6, positiontexturevertex2}, texU, texV + dz, texU + dz, texV + dz + dy, texW, texH);
-        this.quads[2] = new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex4, positiontexturevertex3, positiontexturevertex7, positiontexturevertex}, texU + dz, texV, texU + dz + dx, texV + dz, texW, texH);
-        this.quads[3] = new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex1, positiontexturevertex2, positiontexturevertex6, positiontexturevertex5}, texU + dz + dx, texV + dz, texU + dz + dx + dx, texV, texW, texH);
-        this.quads[4] = new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex, positiontexturevertex7, positiontexturevertex2, positiontexturevertex1}, texU + dz, texV + dz, texU + dz + dx, texV + dz + dy, texW, texH);
-        this.quads[5] = new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex3, positiontexturevertex4, positiontexturevertex5, positiontexturevertex6}, texU + dz + dx + dz, texV + dz, texU + dz + dx + dz + dx, texV + dz + dy, texW, texH);
+        if (dy != 0 && dz != 0) {
+            quads.add(new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex4, positiontexturevertex, positiontexturevertex1, positiontexturevertex5}, texU + dz + dx, texV + dz, texU + dz + dx + dz, texV + dz + dy, texW, texH));
+            if (dx != 0)
+                quads.add(new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex7, positiontexturevertex3, positiontexturevertex6, positiontexturevertex2}, texU, texV + dz, texU + dz, texV + dz + dy, texW, texH));
+        }
+        if (dx != 0 && dz != 0) {
+            quads.add(new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex4, positiontexturevertex3, positiontexturevertex7, positiontexturevertex}, texU + dz, texV, texU + dz + dx, texV + dz, texW, texH));
+            if (dy != 0)
+                quads.add(new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex1, positiontexturevertex2, positiontexturevertex6, positiontexturevertex5}, texU + dz + dx, texV + dz, texU + dz + dx + dx, texV, texW, texH));
+        }
+        if (dx != 0 && dy != 0) {
+            quads.add(new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex, positiontexturevertex7, positiontexturevertex2, positiontexturevertex1}, texU + dz, texV + dz, texU + dz + dx, texV + dz + dy, texW, texH));
+            if (dz != 0)
+                quads.add(new TexturedQuad(new PositionTextureVertex[]{positiontexturevertex3, positiontexturevertex4, positiontexturevertex5, positiontexturevertex6}, texU + dz + dx + dz, texV + dz, texU + dz + dx + dz + dx, texV + dz + dy, texW, texH));
+        }
         if (mirror) {
             for(TexturedQuad texturedquad : this.quads) {
                 texturedquad.flipFace();

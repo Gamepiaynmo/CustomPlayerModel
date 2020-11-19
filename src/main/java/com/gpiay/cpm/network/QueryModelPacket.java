@@ -5,6 +5,7 @@ import com.gpiay.cpm.client.ClientConfig;
 import com.gpiay.cpm.model.ModelManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -21,7 +22,7 @@ public class QueryModelPacket {
     }
 
     public QueryModelPacket(PacketBuffer buffer) {
-        modelId = buffer.readString();
+        modelId = buffer.readString(32767);
     }
 
     public void toBytes(PacketBuffer buffer) {
@@ -29,7 +30,7 @@ public class QueryModelPacket {
     }
 
     public void handler(Supplier<NetworkEvent.Context> ctx) {
-        File modelFile = ModelManager.findModelFile(modelId);
+        File modelFile = ModelManager.findModelFileFromCache(modelId);
         if (modelFile != null) {
             ctx.get().enqueueWork(ctx.get().getDirection().getReceptionSide() == LogicalSide.SERVER ?
                     () -> {
@@ -40,8 +41,8 @@ public class QueryModelPacket {
                         if (ClientConfig.SEND_MODELS.get() && CPMMod.cpmClient.isServerModded) {
                             Networking.INSTANCE.send(PacketDistributor.SERVER.noArg(),
                                     new ModelDataPacket(modelFile));
-                            Minecraft.getInstance().ingameGUI.setOverlayMessage(
-                                    new TranslationTextComponent("text.cpm.modelUploaded"), true);
+                            Minecraft.getInstance().ingameGUI.addChatMessage(ChatType.CHAT,
+                                    new TranslationTextComponent("text.cpm.modelUploaded"));
                         }
                     });
         }

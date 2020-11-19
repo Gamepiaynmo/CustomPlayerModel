@@ -12,11 +12,11 @@ import java.util.Map;
 public class CustomBipedModel extends BipedModel<LivingEntity> {
     public final float legLength, legInterval, legOffset;
     public final float bodyPivotHeight, bodyOffset;
-    public final float armPivotHeight, armInterval, armOffset;
+    public final float armPivotHeight, armInterval, armOffset, armLength;
     public final float headPivotHeight, headOffset;
 
     public CustomBipedModel(float legLength, float legInterval, float legOffset, float bodyPivotHeight, float bodyOffset,
-                            float armPivotHeight, float armInterval, float armOffset, float headPivotHeight, float headOffset) {
+                            float armPivotHeight, float armInterval, float armOffset, float armLength, float headPivotHeight, float headOffset) {
         bipedHead.setRotationPoint(0, 24.0f - headPivotHeight, headOffset);
         bipedBody.setRotationPoint(0, 24.0f - bodyPivotHeight, bodyOffset);
         bipedRightArm.setRotationPoint(-armInterval / 2, 24.0f - armPivotHeight, armOffset);
@@ -32,6 +32,7 @@ public class CustomBipedModel extends BipedModel<LivingEntity> {
         this.armPivotHeight = armPivotHeight;
         this.armInterval = armInterval;
         this.armOffset = armOffset;
+        this.armLength = armLength;
         this.headPivotHeight = headPivotHeight;
         this.headOffset = headOffset;
     }
@@ -45,6 +46,7 @@ public class CustomBipedModel extends BipedModel<LivingEntity> {
                 param.getOrDefault("arm_pivot_height", 22.0f),
                 param.getOrDefault("arm_interval", 10.0f),
                 param.getOrDefault("arm_offset", 0.0f),
+                param.getOrDefault("arm_length", 9.0f),
                 param.getOrDefault("head_pivot_height", 24.0f),
                 param.getOrDefault("head_offset", 0.0f));
     }

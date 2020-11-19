@@ -14,6 +14,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -34,6 +35,10 @@ public class CPMCommand {
         };
     }
 
+    private static boolean hasPermission(String modelId, PlayerEntity player) {
+        return CPMMod.cpmServer.modelManager.hasPermission(modelId, player);
+    }
+
     private static Command<CommandSource> execute(ExceptionFunction<CommandContext<CommandSource>, Integer, Exception> executor) {
         return context -> {
             try {
@@ -46,7 +51,8 @@ public class CPMCommand {
             } catch (CommandSyntaxException e) {
                 throw e;
             } catch (Exception e) {
-                ITextComponent text = new StringTextComponent(e.getLocalizedMessage());
+                String message = e.getLocalizedMessage();
+                ITextComponent text = new StringTextComponent(message == null ? "" : message);
                 text.getStyle().setColor(TextFormatting.RED);
                 context.getSource().sendFeedback(text, false);
                 return 0;
@@ -69,8 +75,10 @@ public class CPMCommand {
                                 .requires(permission("cpm.command.selectSelf"))
                                 .executes(execute(context -> {
                                     String modelId = context.getArgument("model", String.class);
-                                    context.getSource().asPlayer().getCapability(CPMCapability.CAPABILITY).ifPresent(cap ->
-                                            ((ServerCPMCapability) cap).setModelId(modelId, getPlayerOrNull(context.getSource())));
+                                    if (hasPermission(modelId, context.getSource().asPlayer())) {
+                                        context.getSource().asPlayer().getCapability(CPMCapability.CAPABILITY).ifPresent(cap ->
+                                                ((ServerCPMCapability) cap).setModelId(modelId, getPlayerOrNull(context.getSource())));
+                                    }
                                     return 1;
                                 }))
                                 .then(Commands.argument("targets", EntityArgument.entities())
@@ -78,17 +86,19 @@ public class CPMCommand {
                                         .executes(execute(context -> {
                                             String modelId = context.getArgument("model", String.class);
                                             Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
-                                            for (Entity entity : entities) {
-                                                boolean[] shouldBreak = { false };
-                                                entity.getCapability(CPMCapability.CAPABILITY).ifPresent(cap -> {
-                                                    ServerCPMCapability capability = (ServerCPMCapability) cap;
-                                                    capability.setModelId(modelId, getPlayerOrNull(context.getSource()));
-                                                    if (!capability.getModelId().equals(modelId))
-                                                        shouldBreak[0] = true;
-                                                });
+                                            if (hasPermission(modelId, context.getSource().asPlayer())) {
+                                                for (Entity entity : entities) {
+                                                    boolean[] shouldBreak = {false};
+                                                    entity.getCapability(CPMCapability.CAPABILITY).ifPresent(cap -> {
+                                                        ServerCPMCapability capability = (ServerCPMCapability) cap;
+                                                        capability.setModelId(modelId, getPlayerOrNull(context.getSource()));
+                                                        if (!capability.getModelId().equals(modelId))
+                                                            shouldBreak[0] = true;
+                                                    });
 
-                                                if (shouldBreak[0])
-                                                    break;
+                                                    if (shouldBreak[0])
+                                                        break;
+                                                }
                                             }
                                             return entities.size();
                                         })))))

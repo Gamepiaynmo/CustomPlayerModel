@@ -29,10 +29,13 @@ public class ModelInfo {
     String description = "";
     String url = "";
 
+    public boolean isCached;
+    public double defaultScale = 1;
+
     public final Map<Pose, EntitySize> entitySize = Maps.newHashMap();
     public final Map<Pose, Pair<Float, Float>> entityEyeHeight = Maps.newHashMap();
 
-    public static Pose getPoseFromName(JsonReader reader, String name) throws IOException {
+    public static Pose getPoseFromName(JsonReader reader, String name) {
         switch (name) {
             case "standing": return Pose.STANDING;
             case "sneaking": return Pose.SNEAKING;
@@ -79,7 +82,7 @@ public class ModelInfo {
         return loadFromEntry(loadFromZipMemory(id, data));
     }
 
-    static ModelLoadData loadFromDirectory(File directory) throws IOException {
+    static ModelLoadData loadFromDirectory(File directory) {
         class FileResource implements IResource {
             private final File file;
             public FileResource(File file) {
@@ -216,19 +219,22 @@ public class ModelInfo {
         switch (key) {
             case "name":
                 modelInfo.name = mainModel.nextString();
-                return false;
+                break;
             case "version":
                 modelInfo.version = mainModel.nextString();
-                return false;
+                break;
             case "author":
                 JsonHelper.readArray(mainModel, () -> modelInfo.author.add(mainModel.nextString()));
-                return false;
+                break;
             case "description":
                 modelInfo.description = mainModel.nextString();
-                return false;
+                break;
             case "url":
                 modelInfo.url = mainModel.nextString();
-                return false;
+                break;
+            case "default_scale":
+                modelInfo.defaultScale = mainModel.nextDouble();
+                break;
             case "size": {
                 JsonHelper.readObject(mainModel, pose -> {
                     mainModel.beginArray();
@@ -238,7 +244,7 @@ public class ModelInfo {
                     mainModel.endArray();
                     modelInfo.entitySize.put(getPoseFromName(mainModel, pose), size);
                 });
-                return false;
+                break;
             }
             case "eye_height": {
                 JsonHelper.readObject(mainModel, pose -> {
@@ -249,17 +255,16 @@ public class ModelInfo {
                     mainModel.endArray();
                     modelInfo.entityEyeHeight.put(getPoseFromName(mainModel, pose), eyeHeight);
                 });
-                return false;
+                break;
             }
             default:
                 return true;
         }
+
+        return false;
     }
 
     public EntitySize getEntitySize(LivingEntity entity, Pose pose, EntitySize size, double scale) {
-        if (!CPMMod.cpmClient.isServerModded)
-            return size;
-
         EntitySize newSize = entitySize.get(filterPose(pose));
         if (newSize == null)
             newSize = size;
@@ -269,9 +274,6 @@ public class ModelInfo {
     }
 
     public float getEntityEyeHeight(LivingEntity entity, Pose pose, float eyeHeight, double scale) {
-        if (!CPMMod.cpmClient.isServerModded)
-            return eyeHeight;
-
         Pair<Float, Float> height = entityEyeHeight.get(filterPose(pose));
         if (height != null) return (entity.isChild() ? height.getRight() : height.getLeft()) * (float) scale;
         return eyeHeight * (float) scale;

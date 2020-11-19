@@ -1,5 +1,6 @@
 package com.gpiay.cpm.network;
 
+import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.model.ModelManager;
 import com.gpiay.cpm.server.ServerConfig;
 import net.minecraft.network.PacketBuffer;
@@ -23,7 +24,7 @@ public class ModelDataPacket {
             stream.read(data);
             stream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            CPMMod.warn(e);
         }
     }
 

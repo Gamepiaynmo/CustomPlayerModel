@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.1.0-forge-mc1.14.4'
+version = '2.0.0-forge-mc1.14.4-beta'
 group = 'com.gpiay.cpm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cpm'
 
@@ -85,7 +85,7 @@ minecraft {
         }
     }
 
-    accessTransformer = file('src/main/resources/META-INF/cpmat.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 }
 
 dependencies {

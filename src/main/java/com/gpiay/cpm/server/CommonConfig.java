@@ -1,12 +1,13 @@
 package com.gpiay.cpm.server;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 
-import java.util.List;
+import java.util.*;
 
 public class CommonConfig {
     public static ForgeConfigSpec CONFIG;
@@ -18,6 +19,13 @@ public class CommonConfig {
     public static ForgeConfigSpec.EnumValue<DefaultPermissionLevel> SCALE_SELF;
     public static ForgeConfigSpec.EnumValue<DefaultPermissionLevel> SCALE_OTHERS;
     public static ForgeConfigSpec.EnumValue<DefaultPermissionLevel> REFRESH;
+
+    public static class ModelPermission {
+        public String node;
+        public List<String> models;
+    }
+
+    public static ForgeConfigSpec.ConfigValue<List<? extends ModelPermission>> MODEL_PERMISSIONS;
 
     private static final List<String> defaultEntities = Lists.newArrayList("minecraft:player",
             "minecraft:bat",
@@ -121,6 +129,11 @@ public class CommonConfig {
                 .translation("config.cpm.permission.refreshModels")
                 .comment("Permission for refreshing Local Model Files.")
                 .defineEnum("refreshModels", DefaultPermissionLevel.OP);
+
+        MODEL_PERMISSIONS = builder
+                .translation("config.cpm.permission.models")
+                .comment("Permission nodes of models.")
+                .defineList("models", Collections.emptyList(), node -> true);
 
         builder.pop();
         CONFIG = builder.build();

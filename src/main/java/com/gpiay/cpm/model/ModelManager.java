@@ -59,10 +59,10 @@ public class ModelManager {
         }
     }
 
-    public static File findModelFile(String modelId) {
+    public static File findModelFileFromCache(String modelId) {
         File modelFile = modelFiles.inverse().get(modelId);
         if (modelFile == null) {
-            File modelDir = new File(CPMMod.CACHE_DIR, modelId);
+            File modelDir = new File(CPMMod.CACHE_DIR, modelId.substring(0, 2));
             File[] files = modelDir.listFiles();
             if (files != null) {
                 for (File file : files) {
@@ -82,7 +82,7 @@ public class ModelManager {
     public static void saveToCache(byte[] data) {
         try {
             String modelId = HashHelper.hashCode(data);
-            File directory = new File(CPMMod.CACHE_DIR, modelId);
+            File directory = new File(CPMMod.CACHE_DIR, modelId.substring(0, 2));
             directory.mkdirs();
 
             File modelFile = new File(directory, modelId + ".zip");
@@ -94,7 +94,7 @@ public class ModelManager {
     }
 
     public static void deleteCachedModel(String modelId) {
-        deleteDirectory(new File(CPMMod.CACHE_DIR, modelId));
+        deleteDirectory(new File(CPMMod.CACHE_DIR, modelId.substring(0, 2)));
     }
 
     public static void deleteDirectory(File directory) {

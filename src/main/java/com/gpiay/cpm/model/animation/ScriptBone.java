@@ -4,9 +4,9 @@ import com.gpiay.cpm.model.element.IModelBone;
 import com.gpiay.cpm.model.element.ModelBone;
 
 public class ScriptBone {
-    private IModelBone bone;
+    private final IModelBone bone;
 
-    private boolean isModel;
+    private final boolean isModel;
     private ModelBone modelBone;
 
     public ScriptBone(IModelBone bone) {
@@ -23,8 +23,8 @@ public class ScriptBone {
     public double getPositionX() { return bone.getPosition().x * 16; }
     public double getPositionY() { return bone.getPosition().y * -16; }
     public double getPositionZ() { return bone.getPosition().z * 16; }
-    public double getRotationX() { return bone.getRotation().x; }
-    public double getRotationY() { return bone.getRotation().y; }
+    public double getRotationX() { return bone.getRotation().y; }
+    public double getRotationY() { return bone.getRotation().x; }
     public double getRotationZ() { return bone.getRotation().z; }
     public double getScaleX() { return bone.getScale().x; }
     public double getScaleY() { return bone.getScale().y; }
@@ -39,8 +39,8 @@ public class ScriptBone {
     public void setPositionX(double value) { if (isModel) modelBone.position.x = value / 16; }
     public void setPositionY(double value) { if (isModel) modelBone.position.y = value / -16; }
     public void setPositionZ(double value) { if (isModel) modelBone.position.z = value / 16; }
-    public void setRotationX(double value) { if (isModel) modelBone.rotation.x = value; }
-    public void setRotationY(double value) { if (isModel) modelBone.rotation.y = value; }
+    public void setRotationX(double value) { if (isModel) modelBone.rotation.y = value; }
+    public void setRotationY(double value) { if (isModel) modelBone.rotation.x = value; }
     public void setRotationZ(double value) { if (isModel) modelBone.rotation.z = value; }
     public void setScaleX(double value) { if (isModel) modelBone.scale.x = value; }
     public void setScaleY(double value) { if (isModel) modelBone.scale.y = value; }

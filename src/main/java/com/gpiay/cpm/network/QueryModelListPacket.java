@@ -1,6 +1,8 @@
 package com.gpiay.cpm.network;
 
 import com.gpiay.cpm.CPMMod;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -15,8 +17,9 @@ public class QueryModelListPacket {
 
     public void handler(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Networking.INSTANCE.send(PacketDistributor.PLAYER.with(() -> ctx.get().getSender()),
-                    new ModelListPacket(CPMMod.cpmServer.modelManager.getModelList(false)));
+            ServerPlayerEntity player = ctx.get().getSender();
+            Networking.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
+                    new ModelListPacket(CPMMod.cpmServer.modelManager.getModelList(player)));
         });
 
         ctx.get().setPacketHandled(true);

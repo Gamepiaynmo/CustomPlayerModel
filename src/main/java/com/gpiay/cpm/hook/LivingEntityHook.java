@@ -1,5 +1,6 @@
 package com.gpiay.cpm.hook;
 
+import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.client.ClientCPMCapability;
 import com.gpiay.cpm.model.ModelInfo;
 import com.gpiay.cpm.model.ModelInstance;
@@ -16,9 +17,11 @@ public class LivingEntityHook {
         ICPMCapability capability = entity.getCapability(CPMCapability.CAPABILITY).orElse(null);
         if (ServerConfig.CUSTOM_BOUNDING_BOX.get() && capability != null) {
             if (entity.world.isRemote) {
-                ModelInstance model = ((ClientCPMCapability) capability).getModel();
-                if (model != null)
-                    return model.getModelPack().getEntitySize(entity, pose, orinSize, capability.getScale());
+                if (CPMMod.cpmClient.isServerModded) {
+                    ModelInstance model = ((ClientCPMCapability) capability).getModel();
+                    if (model != null)
+                        return model.getModelPack().getEntitySize(entity, pose, orinSize, capability.getScale());
+                }
             } else {
                 ModelInfo model = ((ServerCPMCapability) capability).getModel();
                 if (model != null)
@@ -33,9 +36,11 @@ public class LivingEntityHook {
         ICPMCapability capability = entity.getCapability(CPMCapability.CAPABILITY).orElse(null);
         if (ServerConfig.CUSTOM_EYE_HEIGHT.get() && capability != null) {
             if (entity.world.isRemote) {
-                ModelInstance model = ((ClientCPMCapability) capability).getModel();
-                if (model != null)
-                    return model.getModelPack().getEntityEyeHeight(entity, pose, orinHeight, capability.getScale());
+                if (CPMMod.cpmClient.isServerModded) {
+                    ModelInstance model = ((ClientCPMCapability) capability).getModel();
+                    if (model != null)
+                        return model.getModelPack().getEntityEyeHeight(entity, pose, orinHeight, capability.getScale());
+                }
             } else {
                 ModelInfo model = ((ServerCPMCapability) capability).getModel();
                 if (model != null)
