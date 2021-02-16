@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '2.0.0-forge-mc1.16.4-beta'
+version = '2.1.0-forge-mc1.16.4-beta'
 group = 'com.gpiay.cpm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cpm'
 
@@ -29,7 +29,7 @@ minecraft {
     mappings channel: 'snapshot', version: '20201028-1.16.3'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.

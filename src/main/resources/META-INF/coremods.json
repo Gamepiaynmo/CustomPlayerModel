@@ -1,0 +1,7 @@
+{
+  "LivingEntity#getEyeHeight": "assets/cpm/transformer/LivingEntity#getEyeHeight.js",
+  "LivingEntity#getSize": "assets/cpm/transformer/LivingEntity#getSize.js",
+  "LivingRenderer#render": "assets/cpm/transformer/LivingRenderer#render.js",
+  "PlayerEntity#getSize": "assets/cpm/transformer/PlayerEntity#getSize.js",
+  "PlayerRenderer#renderItem": "assets/cpm/transformer/PlayerRenderer#renderItem.js"
+}
