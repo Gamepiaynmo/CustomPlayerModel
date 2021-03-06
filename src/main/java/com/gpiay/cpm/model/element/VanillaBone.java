@@ -82,10 +82,4 @@ public class VanillaBone implements IModelBone {
     public Vector3d getScale() {
         return scale.cpy();
     }
-
-    @Override
-    public Quat4d getQuaternion() {
-        Vector3d rotation = getRotation();
-        return new Quat4d().setEulerAngles(rotation.x, rotation.y, rotation.z);
-    }
 }
