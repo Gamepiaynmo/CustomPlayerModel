@@ -70,9 +70,18 @@ public class GuiModelSelection extends Screen {
         }
 
         if (!CPMMod.cpmClient.isServerModded || CPMMod.cpmServer.server != null) {
-            for (ModelEntry info : CPMMod.cpmClient.modelManager.getEditingModelList())
-                if (modelIds.add(info.id))
-                    modelList.add(info);
+            try {
+                CPMMod.startRecordingError();
+                for (ModelEntry info : CPMMod.cpmClient.modelManager.getEditingModelList())
+                    if (modelIds.add(info.id))
+                        modelList.add(info);
+                for (Exception e : CPMMod.endRecordingError())
+                    throw e;
+            } catch (Exception e) {
+                IFormattableTextComponent text = new StringTextComponent(e.toString());
+                text.setStyle(text.getStyle().setFormatting(TextFormatting.RED));
+                Minecraft.getInstance().ingameGUI.getChatGUI().printChatMessage(text);
+            }
         }
 
         modelList.sort(Comparator.comparing(o -> o.info.getName()));
@@ -196,8 +205,11 @@ public class GuiModelSelection extends Screen {
                     if (CPMMod.cpmClient.isServerModded) {
                         if (model.isLocal && model.isEditing) {
                             sendMessage("/" + CPMMod.MOD_ID + " clear", false);
+                            CPMMod.startRecordingError();
                             minecraft.player.getCapability(CPMCapability.CAPABILITY).ifPresent(cap ->
                                     ((ClientCPMCapability) cap).loadEditingModel(model.id));
+                            for (Exception e : CPMMod.endRecordingError())
+                                throw e;
                         } else {
                             sendMessage("/" + CPMMod.MOD_ID + " select " + model.id, false);
                         }

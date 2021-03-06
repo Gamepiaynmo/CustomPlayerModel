@@ -80,5 +80,6 @@ public class CPMMod {
 
     public static void warn(Exception e) {
         CPMMod.LOGGER.warn(e.getMessage(), e);
+        errorRecord.add(e);
     }
 }

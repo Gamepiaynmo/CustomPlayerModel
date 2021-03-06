@@ -1,12 +1,10 @@
-package com.gpiay.cpm.client.render;
+package com.gpiay.cpm.client.render.item;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.HeldBlockLayer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.EndermanModel;
 import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class CPMEndermanItemLayer extends CPMItemLayer<EndermanEntity, EndermanModel<EndermanEntity>> {

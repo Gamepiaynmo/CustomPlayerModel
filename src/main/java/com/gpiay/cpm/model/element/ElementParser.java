@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.stream.JsonReader;
 import com.gpiay.cpm.util.JsonHelper;
 import com.gpiay.cpm.util.math.Vector3d;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 import java.io.IOException;
@@ -36,9 +37,15 @@ public class ElementParser {
                     break;
                 }
                 case "cubes": {
+                    ModelRenderer identity = new ModelRenderer(0, 0, 0, 0);
                     JsonHelper.readArray(reader, () -> {
-                        bone.boxes.add(parseBox(model, reader, bone.position));
+                        Either<ModelRenderer, ModelRenderer.ModelBox> box = parseBox(model, reader, bone.position);
+                        box.ifLeft(bone.boxes::add);
+                        box.ifRight(identity.cubeList::add);
                     });
+
+                    if (!identity.cubeList.isEmpty())
+                        bone.boxes.add(identity);
 
                     break;
                 }
@@ -49,9 +56,9 @@ public class ElementParser {
         return bone;
     }
 
-    public static ModelRenderer parseBox(ModelPart model, JsonReader reader, Vector3d pivot) throws IOException {
-        int u = 0, v = 0, dx = 0, dy = 0, dz = 0;
-        float x = 0, y = 0, z = 0, delta = 0;
+    public static Either<ModelRenderer, ModelRenderer.ModelBox> parseBox(ModelPart model, JsonReader reader, Vector3d pivot) throws IOException {
+        int u = 0, v = 0;
+        float x = 0, y = 0, z = 0, dx = 0, dy = 0, dz = 0, delta = 0;
         boolean mirror = false;
 
         ModelRenderer bone = new ModelRenderer(0, 0, 0, 0);
@@ -86,9 +93,9 @@ public class ElementParser {
                 }
                 case "size": {
                     reader.beginArray();
-                    dx = reader.nextInt();
-                    dy = reader.nextInt();
-                    dz = reader.nextInt();
+                    dx = (float) reader.nextDouble();
+                    dy = (float) reader.nextDouble();
+                    dz = (float) reader.nextDouble();
                     reader.endArray();
                     break;
                 }
@@ -130,7 +137,11 @@ public class ElementParser {
         }
 
         box.quads = quads.toArray(new ModelRenderer.TexturedQuad[0]);
+        boolean identity = bone.rotateAngleX == 0 && bone.rotateAngleY == 0 && bone.rotateAngleZ == 0
+                && bone.rotationPointX == 0 && bone.rotationPointY == 0 && bone.rotationPointZ == 0;
+        if (identity) return Either.right(box);
+
         bone.cubeList.add(box);
-        return bone;
+        return Either.left(bone);
     }
 }

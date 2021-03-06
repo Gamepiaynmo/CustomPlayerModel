@@ -203,6 +203,10 @@ public class ModelInstance {
                         matrixGroup.current = bone.getTransform().mulLeft(transform.get(bone.getParent()).current);
                         double curScale = matrixGroup.current.getScale(new Vector3d()).len() / Math.sqrt(3);
 
+                        double sample = matrixGroup.last.val[Matrix4d.M03];
+                        if (Double.isInfinite(sample) || Double.isNaN(sample))
+                            matrixGroup.last.set(matrixGroup.current);
+
                         Vector3d lastEnd = new Vector3d(0, 0, 1).mul(matrixGroup.last);
                         Vector3d curStart = matrixGroup.current.getTranslation(new Vector3d());
                         Vector3d curTarget = new Vector3d(0, 0, 1).mul(matrixGroup.current);

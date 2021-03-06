@@ -40,7 +40,7 @@ public class CPMCapeLayer extends CapeLayer {
                 ItemStack itemstack = entityIn.getItemStackFromSlot(EquipmentSlotType.CHEST);
                 if (itemstack.getItem() != Items.ELYTRA) {
                     matrixStackIn.push();
-                    matrixStackIn.translate(0.0D, 0.0D, 0.125D);
+//                    matrixStackIn.translate(0.0D, 0.0D, 0.125D);
                     double d0 = MathHelper.lerp((double)partialTicks, entityIn.prevChasingPosX, entityIn.chasingPosX) - MathHelper.lerp((double)partialTicks, entityIn.prevPosX, entityIn.getPosX());
                     double d1 = MathHelper.lerp((double)partialTicks, entityIn.prevChasingPosY, entityIn.chasingPosY) - MathHelper.lerp((double)partialTicks, entityIn.prevPosY, entityIn.getPosY());
                     double d2 = MathHelper.lerp((double)partialTicks, entityIn.prevChasingPosZ, entityIn.chasingPosZ) - MathHelper.lerp((double)partialTicks, entityIn.prevPosZ, entityIn.getPosZ());

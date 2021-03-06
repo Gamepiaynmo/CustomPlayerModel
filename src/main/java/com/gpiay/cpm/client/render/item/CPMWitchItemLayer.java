@@ -1,7 +1,6 @@
-package com.gpiay.cpm.client.render;
+package com.gpiay.cpm.client.render.item;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.layers.WitchHeldItemLayer;
 import net.minecraft.client.renderer.entity.model.WitchModel;
 import net.minecraft.entity.LivingEntity;

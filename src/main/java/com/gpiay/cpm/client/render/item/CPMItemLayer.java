@@ -1,4 +1,4 @@
-package com.gpiay.cpm.client.render;
+package com.gpiay.cpm.client.render.item;
 
 import com.gpiay.cpm.client.ClientCPMCapability;
 import com.gpiay.cpm.model.EnumAttachment;

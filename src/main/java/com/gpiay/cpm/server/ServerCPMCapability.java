@@ -24,15 +24,15 @@ public class ServerCPMCapability extends CPMCapability {
         setModelId(modelId, null);
     }
 
-    private void setModelId(@Nonnull String modelId, boolean update) {
-        setModelId(modelId, null, update);
+    private boolean setModelId(@Nonnull String modelId, boolean update) {
+        return setModelId(modelId, null, update);
     }
 
     public void setModelId(@Nonnull String modelId, ServerPlayerEntity sender) {
         setModelId(modelId, sender, true);
     }
 
-    private void setModelId(@Nonnull String modelId, ServerPlayerEntity sender, boolean update) {
+    private boolean setModelId(@Nonnull String modelId, ServerPlayerEntity sender, boolean update) {
         if (!this.modelId.equals(modelId)) {
             if (modelId.isEmpty()) {
                 model = null;
@@ -49,7 +49,11 @@ public class ServerCPMCapability extends CPMCapability {
             if (this.modelId.equals(modelId) && update) {
                 onModelUpdate();
             }
+
+            return true;
         }
+
+        return false;
     }
 
     @Override
@@ -57,19 +61,23 @@ public class ServerCPMCapability extends CPMCapability {
         setScale(scale, true);
     }
 
-    private void setScale(double scale, boolean update) {
+    private boolean setScale(double scale, boolean update) {
         if (scale != this.scale) {
             this.scale = scale;
             if (update)
                 onModelUpdate();
+
+            return true;
         }
+
+        return false;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        setScale(nbt.contains("scale") ? nbt.getDouble("scale") : 1, false);
-        setModelId(nbt.getString("model"), false);
-        onModelUpdate();
+        boolean updateScale = setScale(nbt.contains("scale") ? nbt.getDouble("scale") : 1, false);
+        boolean updateModel = setModelId(nbt.getString("model"), false);
+        if (updateScale || updateModel) onModelUpdate();
     }
 
     private void onModelUpdate() {

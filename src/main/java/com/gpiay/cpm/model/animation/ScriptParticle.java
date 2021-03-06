@@ -65,4 +65,6 @@ public class ScriptParticle {
     public void setMinSize(double value) { particle.size[0] = value; }
     public void setMaxSize(double value) { particle.size[1] = value; }
     public void setGravity(double value) { particle.gravity = value; }
+
+    public void setCollide(boolean value) { particle.collide = value; }
 }

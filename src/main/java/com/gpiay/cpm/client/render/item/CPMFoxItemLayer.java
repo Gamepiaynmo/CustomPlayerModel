@@ -1,8 +1,7 @@
-package com.gpiay.cpm.client.render;
+package com.gpiay.cpm.client.render.item;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.FoxHeldItemLayer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.FoxModel;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.inventory.EquipmentSlotType;

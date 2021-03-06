@@ -74,7 +74,7 @@ public class SlimeSkeleton extends Skeleton<SlimeModel<LivingEntity>> {
                 addBuiltinAttachment(attachment, instance, "body");
                 break;
             case CAPE:
-                addBuiltinAttachment(attachment, instance, "body", new Vector3d(0, 0, 4),
+                addBuiltinAttachment(attachment, instance, "body", new Vector3d(0, 0, 5),
                         Vector3d.Zero.cpy(), Vector3d.One.cpy().scl(1 / size));
             case ELYTRA:
                 addBuiltinAttachment(attachment, instance, "none", new Vector3d(0, 6, 3),

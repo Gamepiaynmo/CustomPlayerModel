@@ -44,7 +44,7 @@ public class ClientCPMCapability extends CPMCapability {
     private void setModel(ModelInstance model, boolean update) {
         this.model = model;
         if (update) {
-            this.scale = model == null ? 1.0 : model.getModelPack().defaultScale;
+//            this.scale = model == null ? 1.0 : model.getModelPack().defaultScale;
             onModelUpdate();
         }
     }

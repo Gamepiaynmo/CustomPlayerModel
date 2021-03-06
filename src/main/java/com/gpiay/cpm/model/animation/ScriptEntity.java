@@ -68,7 +68,9 @@ public class ScriptEntity {
     public double getScale() { return scale; }
 
     public double getHealth() { return entity.getHealth(); }
+    public double getMaxHealth() { return entity.getMaxHealth(); }
     public double getFoodLevel() { return as(PlayerEntity.class, entity -> (double) entity.getFoodStats().getFoodLevel(), 0); }
+    public double getSaturationLevel() { return as(PlayerEntity.class, entity -> (double) entity.getFoodStats().getSaturationLevel(), 0); }
     public double getHurtTime() { return entity.hurtTime - partialTicks; }
     public double getPosX() { return MathHelper.lerp(entity.prevPosX, entity.getPosX(), partialTicks); }
     public double getPosY() { return MathHelper.lerp(entity.prevPosY, entity.getPosY(), partialTicks); }

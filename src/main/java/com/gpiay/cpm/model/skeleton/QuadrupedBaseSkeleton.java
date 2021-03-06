@@ -44,7 +44,7 @@ public class QuadrupedBaseSkeleton<M extends CustomQuadrupedModel> extends Skele
                 break;
             case CHESTPLATE_BODY:
             case CAPE:
-                addBuiltinAttachment(attachment, instance, "body");
+                addBuiltinAttachment(attachment, instance, "body", new Vector3d(0, 0, 2));
             case ELYTRA:
                 addBuiltinAttachment(attachment, instance, "none", new Vector3d(0, entityModel.bodyPivotHeight - 24, 0), new Vector3d(0, 90, 0));
                 break;

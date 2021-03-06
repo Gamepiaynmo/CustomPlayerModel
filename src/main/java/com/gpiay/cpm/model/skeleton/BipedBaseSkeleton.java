@@ -133,7 +133,7 @@ public class BipedBaseSkeleton<M extends CustomBipedModel> extends Skeleton<M> {
             case CHESTPLATE_BODY:
             case LEGGINGS_BODY:
             case CAPE:
-                addBuiltinAttachment(attachment, instance, "body");
+                addBuiltinAttachment(attachment, instance, "body", new Vector3d(0, 0, 2));
                 break;
             case ELYTRA:
                 addBuiltinAttachment(attachment, instance, "none", new Vector3d(0, entityModel.bodyPivotHeight - 24, 0));

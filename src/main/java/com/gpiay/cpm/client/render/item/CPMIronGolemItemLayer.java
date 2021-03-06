@@ -1,8 +1,7 @@
-package com.gpiay.cpm.client.render;
+package com.gpiay.cpm.client.render.item;
 
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.IronGolenFlowerLayer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.IronGolemModel;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.item.ItemStack;

@@ -15,6 +15,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
@@ -56,7 +59,16 @@ public class ClientModelManager extends ModelManager {
                                 playerEntity.getCapability(CPMCapability.CAPABILITY).ifPresent(capability -> {
                                     ClientCPMCapability clientCap = (ClientCPMCapability) capability;
                                     if (clientCap.getModelId().isEmpty() && clientCap.getModel() != null) {
-                                        clientCap.loadEditingModel(cpmClient.editingModel.getName());
+                                        try {
+                                            CPMMod.startRecordingError();
+                                            clientCap.loadEditingModel(cpmClient.editingModel.getName());
+                                            for (Exception e : CPMMod.endRecordingError())
+                                                throw e;
+                                        } catch (Exception e) {
+                                            IFormattableTextComponent text = new StringTextComponent(e.toString());
+                                            text.setStyle(text.getStyle().setFormatting(TextFormatting.RED));
+                                            Minecraft.getInstance().ingameGUI.getChatGUI().printChatMessage(text);
+                                        }
                                     }
                                 });
                             }
@@ -136,7 +148,8 @@ public class ClientModelManager extends ModelManager {
                         modelEntry.isEditing = true;
                         modelList.add(modelEntry);
                     }
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    CPMMod.warn(e);
                 }
             }
 

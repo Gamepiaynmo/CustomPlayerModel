@@ -75,6 +75,7 @@ public class ModelPack extends ModelInfo {
         for (EnumAttachment attachment : EnumAttachment.values()) {
             List<String> boneList = attachments.get(attachment);
             if (boneList != null) {
+                instance.allocateAttachment(attachment);
                 for (String boneName : boneList) {
                     ModelBone.Instance bone = instance.boneMap.get(boneName);
                     if (bone != null) {
