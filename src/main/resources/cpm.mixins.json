@@ -1,0 +1,9 @@
+{
+	"required": true,
+	"package": "com.gpiay.cpm.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"refmap": "cpm.refmap.json",
+	"mixins": [
+	],
+	"minVersion": "0.8.3"
+}
