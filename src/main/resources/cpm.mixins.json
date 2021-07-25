@@ -4,6 +4,14 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "cpm.refmap.json",
 	"mixins": [
+		"MixinLivingEntity",
+		"MixinPlayerEntity",
+		"MixinEntity"
 	],
-	"minVersion": "0.8.3"
+	"client": [
+		"MixinLivingRenderer",
+		"MixinPlayerRenderer",
+		"MixinActiveRenderInfo"
+	],
+	"minVersion": "0.8.2"
 }
