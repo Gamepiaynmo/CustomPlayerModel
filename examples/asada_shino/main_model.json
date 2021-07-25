@@ -1,0 +1,139 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.shino",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "head_c",
+					"pivot": [0, 18, 0],
+					"cubes": [
+						{"origin": [-4, 18, -4], "size": [8, 8, 8], "uv": [0, 0]},
+						{"origin": [-4, 19, -4], "size": [1, 2, 1], "inflate": 0.3, "uv": [0, 0]},
+						{"origin": [3, 19, -4], "size": [1, 2, 1], "inflate": 0.3, "uv": [0, 0], "mirror": true},
+						{"origin": [-4, 16, -4], "size": [1, 4, 1], "inflate": 0.1, "uv": [0, 16]},
+						{"origin": [3, 16, -4], "size": [1, 4, 1], "inflate": 0.1, "uv": [0, 16], "mirror": true}
+					]
+				},
+				{
+					"name": "blink",
+					"parent": "head_c",
+					"pivot": [0, 18, 0],
+					"cubes": [
+						{"origin": [-4, 18, -4.001], "size": [8, 8, 0], "uv": [48, 0]}
+					]
+				},
+				{
+					"name": "hair",
+					"parent": "head_c",
+					"pivot": [4, 24, 0],
+					"rotation": [0, 0, -25]
+				},
+				{
+					"name": "right_arm_c",
+					"pivot": [-3, 17.5, 0],
+					"cubes": [
+						{"origin": [-5, 8.5, -1], "size": [3, 8, 3], "inflate": -0.2, "uv": [22, 26], "mirror": true},
+						{"origin": [-5, 14.5, -1], "size": [3, 3, 3], "inflate": 0.2, "uv": [18, 37], "mirror": true},
+						{"origin": [-5, 11, -1], "size": [3, 1, 3], "uv": [25, 56], "mirror": true}
+					]
+				},
+				{
+					"name": "left_arm_c",
+					"pivot": [3, 17.5, 0],
+					"cubes": [
+						{"origin": [2, 8.5, -1], "size": [3, 8, 3], "inflate": -0.2, "uv": [22, 26]},
+						{"origin": [2, 14.5, -1], "size": [3, 3, 3], "inflate": 0.2, "uv": [18, 37]},
+						{"origin": [2, 11, -1], "size": [3, 1, 3], "uv": [25, 56]}
+					]
+				},
+				{
+					"name": "body_c",
+					"pivot": [0, 18, 0],
+					"cubes": [
+						{"origin": [-3, 9.5, -2.5], "size": [6, 8, 5], "uv": [0, 26]},
+						{"origin": [-3.5, 12.5, -3], "size": [7, 4, 6], "uv": [4, 16]},
+						{"origin": [-3.5, 9, -3], "size": [7, 1, 6], "uv": [0, 46]},
+						{"origin": [-3, 8, -2.5], "size": [6, 1, 5], "inflate": 0.01, "uv": [0, 53]},
+						{"origin": [-3, 16, -2.5], "size": [6, 2, 5], "inflate": 0.2, "uv": [0, 39]}
+					]
+				},
+				{
+					"name": "scarf_left_1",
+					"parent": "body_c",
+					"pivot": [1.5, 18, 1],
+					"rotation": [-20, 20, 0],
+					"cubes": [
+						{"origin": [0, 18, 1], "size": [3, 0, 4], "uv": [24, 45]}
+					]
+				},
+				{
+					"name": "scarf_left_2",
+					"parent": "scarf_left_1",
+					"pivot": [1.5, 18, 5],
+					"rotation": [-30, 0, 0],
+					"cubes": [
+						{"origin": [0, 17.999, 5], "size": [3, 0, 4], "uv": [24, 45]}
+					]
+				},
+				{
+					"name": "scarf_left_3",
+					"parent": "scarf_left_2",
+					"pivot": [1.5, 18, 9],
+					"rotation": [-30, 0, 0],
+					"cubes": [
+						{"origin": [0, 17.999, 9], "size": [3, 0, 6], "uv": [24, 49]}
+					]
+				},
+				{
+					"name": "scarf_right_1",
+					"parent": "body_c",
+					"pivot": [-1.5, 18, 1],
+					"rotation": [-20, -20, 0],
+					"cubes": [
+						{"origin": [-3, 18, 1], "size": [3, 0, 4], "uv": [24, 45], "mirror": true}
+					]
+				},
+				{
+					"name": "scarf_right_2",
+					"parent": "scarf_right_1",
+					"pivot": [-1.5, 18, 5],
+					"rotation": [-30, 0, 0],
+					"cubes": [
+						{"origin": [-3, 17.99987, 4.9995], "size": [3, 0, 4], "uv": [24, 45], "mirror": true}
+					]
+				},
+				{
+					"name": "scarf_right_3",
+					"parent": "scarf_right_2",
+					"pivot": [-1.5, 18, 9],
+					"rotation": [-30, 0, 0],
+					"cubes": [
+						{"origin": [-3, 17.9995, 8.99913], "size": [3, 0, 6], "uv": [24, 49], "mirror": true}
+					]
+				},
+				{
+					"name": "left_leg_c",
+					"pivot": [2, 9, 0],
+					"cubes": [
+						{"origin": [0, 0, -1.5], "size": [3, 9, 3], "uv": [48, 20]}
+					]
+				},
+				{
+					"name": "right_leg_c",
+					"pivot": [-2, 9, 0],
+					"cubes": [
+						{"origin": [-3, 0, -1.5], "size": [3, 9, 3], "uv": [48, 20], "mirror": true}
+					]
+				}
+			]
+		}
+	]
+}

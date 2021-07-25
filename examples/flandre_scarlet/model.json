@@ -1,0 +1,36 @@
+{
+	"name": "Flandre Scarlet",
+	"version": "1.0",
+	"author": ["Succinum", "ZeniCrow", "Paulzzh", "Tian_mi"],
+	"description": "Flandre Scarlet from Touhou Project",
+	"skeleton": {
+		"type": "biped",
+		"param": {
+			"leg_length": 9,
+			"leg_interval": 4,
+			"leg_offset": 0,
+			"body_pivot_height": 18,
+			"body_offset": 0,
+			"arm_pivot_height": 17.5,
+			"arm_interval": 6,
+			"arm_offset": 0,
+			"arm_length": 9,
+			"head_pivot_height": 18,
+			"head_offset": 0
+		}
+	},
+	"parts": [
+		{
+			"name": "flandre_scarlet",
+			"texture": "flandre_scarlet"
+		}
+	],
+	"size": {
+		"standing": [0.45, 1.45],
+		"sneaking": [0.45, 1.225]
+	},
+	"eye_height": {
+		"standing": [1.215, 0.6075],
+		"sneaking": [0.9525, 0.47625]
+	}
+}

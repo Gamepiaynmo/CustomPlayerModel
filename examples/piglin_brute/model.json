@@ -1,0 +1,38 @@
+{
+	"name": "Piglin Brute",
+	"version": "1.0",
+	"author": ["DearFox, Minecraft"],
+	"description": "Piglin Brute Model",
+	"skeleton": {
+		"type": "biped",
+		"param": {
+			"leg_length": 12,
+			"leg_interval": 4,
+			"leg_offset": 0,
+			"body_pivot_height": 24,
+			"body_offset": 0,
+			"arm_pivot_height": 24,
+			"arm_interval": 10,
+			"arm_offset": 0,
+			"arm_length": 12,
+			"head_pivot_height": 24,
+			"head_offset": 0
+		}
+	},
+	"parts": [
+		{
+			"name": "piglin_brute",
+			"texture": "piglin_brute"
+		}
+	],
+	"size": {
+		"standing": [0.6, 1.8],
+		"sneaking": [0.6, 1.5],
+		"swimming": [0.6, 0.6]
+	},
+	"eye_height": {
+		"standing": [1.62, 0.81],
+		"sneaking": [1.27, 0.635],
+		"swimming": [0.4, 0.2]
+	}
+}

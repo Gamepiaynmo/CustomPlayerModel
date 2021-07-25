@@ -1,0 +1,40 @@
+{
+	"name": "Asada Shino",
+	"version": "1.0",
+	"author": ["Gamepiaynmo"],
+	"description": "Asada Shino from Sword Art Online",
+	"url": "http://cpmmod.top/model/asada_shino",
+	// "default_scale": 1.333333,
+	"skeleton": {
+		"type": "biped",
+		"param": {
+			"leg_length": 9,
+			"leg_interval": 4,
+			"leg_offset": 0,
+			"body_pivot_height": 18,
+			"body_offset": 0,
+			"arm_pivot_height": 17.5,
+			"arm_interval": 6,
+			"arm_offset": 0,
+			"arm_length": 9,
+			"head_pivot_height": 18,
+			"head_offset": 0
+		},
+		"left_arm": ["left_arm"],
+		"right_arm": ["right_arm"]
+	},
+	"parts": [
+		{
+			"name": "main_model",
+			"texture": "asada_shino"
+		}
+	],
+	"size": {
+		"standing": [0.45, 1.45],
+		"sneaking": [0.45, 1.225]
+	},
+	"eye_height": {
+		"standing": [1.215, 0.6075],
+		"sneaking": [0.9525, 0.47625]
+	}
+}
