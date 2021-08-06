@@ -4,16 +4,17 @@
   "package": "com.gpiay.cpm.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinEntity",
     "MixinLivingEntity",
     "MixinPlayerEntity",
-    "MixinEntity",
-    "PlayerJoinHook"
+    "PlayerEventHook"
   ],
   "client": [
+    "LivingRendererHook",
+    "MixinActiveRenderInfo",
     "MixinLivingRenderer",
     "MixinPlayerRenderer",
-    "MixinActiveRenderInfo",
-    "LivingRendererHook"
+    "TextureManagerFix"
   ],
   "injectors": {
     "defaultRequire": 1

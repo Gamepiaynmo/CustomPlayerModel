@@ -1,11 +1,10 @@
 package com.gpiay.cpm.entity;
 
 import dev.onyxstudios.cca.api.v3.component.CopyableComponent;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 
-public class ServerCPMComponent extends ServerCPMAttachment implements ICPMComponent, AutoSyncedComponent, CopyableComponent<ICPMComponent> {
+public class ServerCPMComponent extends ServerCPMAttachment implements ICPMComponent, CopyableComponent<ICPMComponent> {
     public ServerCPMComponent(LivingEntity entity) {
         super(entity);
     }

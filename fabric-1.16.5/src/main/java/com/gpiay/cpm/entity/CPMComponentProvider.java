@@ -17,6 +17,6 @@ public class CPMComponentProvider implements EntityComponentInitializer {
         registry.registerFor(LivingEntity.class, ATTACHMENT, (livingEntity -> livingEntity.level.isClientSide ?
                 new ClientCPMComponent(livingEntity) : new ServerCPMComponent(livingEntity)));
 
-        registry.setRespawnCopyStrategy(ATTACHMENT, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.setRespawnCopyStrategy(ATTACHMENT, RespawnCopyStrategy.ALWAYS_COPY);
     }
 }

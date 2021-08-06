@@ -16,9 +16,4 @@ public class CPMConfig {
     public static boolean customBoundingBox() { return ServerConfig.CUSTOM_BOUNDING_BOX.get(); }
     public static boolean customEyePosition() { return ServerConfig.CUSTOM_EYE_POSITION.get(); }
     public static boolean receiveModels() { return ServerConfig.RECEIVE_MODELS.get(); }
-
-    public static boolean serverCustomEyeHeight() { return ServerConfig.CUSTOM_EYE_HEIGHT.get(); }
-    public static boolean serverCustomBoundingBox() { return ServerConfig.CUSTOM_BOUNDING_BOX.get(); }
-    public static boolean serverCustomEyePosition() { return ServerConfig.CUSTOM_EYE_POSITION.get(); }
-    public static boolean serverReceiveModels() { return ServerConfig.RECEIVE_MODELS.get(); }
 }

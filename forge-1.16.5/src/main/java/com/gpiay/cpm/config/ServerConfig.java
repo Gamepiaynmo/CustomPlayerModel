@@ -15,22 +15,22 @@ public class ServerConfig {
         builder.comment("Server Config").push("server");
 
         CUSTOM_EYE_HEIGHT = builder
-                .translation("config.cpm.server.customEyeHeight")
+                .translation("text.autoconfig.cpm.option.server.customEyeHeight")
                 .comment("Allow models to change eye height. Will not take effect if server side is not modded or not allowed.")
                 .define("customEyeHeight", true);
 
         CUSTOM_BOUNDING_BOX = builder
-                .translation("config.cpm.server.customBoundingBox")
+                .translation("text.autoconfig.cpm.option.server.customBoundingBox")
                 .comment("Allow models to change bounding box. Will not take effect if server side is not modded or not allowed.")
                 .define("customBoundingBox", true);
 
         CUSTOM_EYE_POSITION = builder
-                .translation("config.cpm.server.customEyePosition")
+                .translation("text.autoconfig.cpm.option.server.customEyePosition")
                 .comment("Allow models to bind eye position to a specified bone. Will not take effect if server side is not modded or not allowed.")
                 .define("customEyePosition", true);
 
         RECEIVE_MODELS = builder
-                .translation("config.cpm.server.receiveModels")
+                .translation("text.autoconfig.cpm.option.server.receiveModels")
                 .comment("Receive models that are not located at the server from clients.")
                 .define("receiveModels", true);
 

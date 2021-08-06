@@ -37,7 +37,7 @@ public class CommonConfig {
         builder.comment("Common Config").push("common");
 
         BLACKLIST = builder
-                .translation("config.cpm.server.blacklist")
+                .translation("text.autoconfig.cpm.option.entityBlacklist")
                 .comment("Do not apply custom models on these entities.")
                 .worldRestart()
                 .defineList("blacklist", defaultBlacklist, entity ->
@@ -47,37 +47,37 @@ public class CommonConfig {
         builder.comment("Permissions").push("permissions");
 
         SELECT_SELF = builder
-                .translation("config.cpm.permission.selectSelf")
+                .translation("text.autoconfig.cpm.option.perm.selectSelf")
                 .comment("Permission for selecting own model.")
                 .defineEnum("selectSelf", DefaultPermissionLevel.ALL);
 
         SELECT_OTHERS = builder
-                .translation("config.cpm.permission.selectOthers")
+                .translation("text.autoconfig.cpm.option.perm.selectOthers")
                 .comment("Permission for selecting other's model.")
                 .defineEnum("selectOthers", DefaultPermissionLevel.OP);
 
         SCALE_SELF = builder
-                .translation("config.cpm.permission.scaleSelf")
+                .translation("text.autoconfig.cpm.option.perm.scaleSelf")
                 .comment("Permission for resizing own model.")
                 .defineEnum("scaleSelf", DefaultPermissionLevel.ALL);
 
         SCALE_OTHERS = builder
-                .translation("config.cpm.permission.scaleOthers")
+                .translation("text.autoconfig.cpm.option.perm.scaleOthers")
                 .comment("Permission for resizing other's model.")
                 .defineEnum("scaleOthers", DefaultPermissionLevel.OP);
 
         REFRESH = builder
-                .translation("config.cpm.permission.refreshModels")
+                .translation("text.autoconfig.cpm.option.perm.refresh")
                 .comment("Permission for refreshing local model files.")
                 .defineEnum("refreshModels", DefaultPermissionLevel.OP);
 
         CREATE_ITEM = builder
-                .translation("config.cpm.permission.createItem")
+                .translation("text.autoconfig.cpm.option.perm.createItem")
                 .comment("Permission for creating model changing items.")
                 .defineEnum("createItems", DefaultPermissionLevel.OP);
 
         MODEL_PERMISSIONS = builder
-                .translation("config.cpm.permission.models")
+                .translation("text.autoconfig.cpm.option.perm.models")
                 .comment("Permission nodes of models.")
                 .defineList("models", Collections.emptyList(), node -> true);
 

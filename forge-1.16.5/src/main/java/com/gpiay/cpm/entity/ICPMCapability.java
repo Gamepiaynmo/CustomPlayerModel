@@ -11,6 +11,6 @@ public interface ICPMCapability extends ICPMAttachment, INBTSerializable<Compoun
     }
 
     default void deserializeNBT(CompoundNBT nbt) {
-        writeToNBT(nbt);
+        readFromNBT(nbt);
     }
 }

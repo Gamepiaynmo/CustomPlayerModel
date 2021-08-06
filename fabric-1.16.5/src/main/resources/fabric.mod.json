@@ -33,8 +33,7 @@
   "depends": {
     "fabricloader": ">=0.11.6",
     "fabric": "*",
-    "minecraft": "1.16.5",
-    "cloth-config-fabric": ">=4.11.26"
+    "minecraft": "1.16.5"
   },
   "suggests": {
     "modmenu": ">=1.16.11"
