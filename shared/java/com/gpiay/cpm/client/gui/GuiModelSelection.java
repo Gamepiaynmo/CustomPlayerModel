@@ -65,7 +65,7 @@ public class GuiModelSelection extends Screen {
         for (ModelEntry entry : serverModelList)
             modelIds.add(entry.id);
 
-        if (!CPMMod.cpmClient.isServerModded || (CPMConfig.sendModels() && CPMConfig.serverReceiveModels())) {
+        if (!CPMMod.cpmClient.isServerModded || (CPMConfig.sendModels() && CPMConfig.receiveModels())) {
             for (ModelEntry info : CPMMod.cpmServer.modelManager.getModelList())
                 if (modelIds.add(info.id))
                     modelList.add(info);

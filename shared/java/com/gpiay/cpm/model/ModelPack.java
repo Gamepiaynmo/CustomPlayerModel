@@ -131,7 +131,7 @@ public class ModelPack extends ModelInfo {
                 instance.updateFunc = (JSObject) bindings.get("update");
                 instance.tickFunc = (JSObject) bindings.get("tick");
 
-                instance.evaluateAnimation(instance.initFunc);
+                instance.evaluateAnimation(instance.initFunc, defaultScale);
             }
         } catch (ScriptException e) {
             CPMMod.warn(new TranslatableException("error.cpm.script.eval", e, name));

@@ -40,7 +40,6 @@ public class ParticleEmitter extends ModelElement {
     public Instance instantiate(ModelInstance model) {
         IModelBone parent = findParent(model, parentName);
         Instance instance = new Instance(name, model, parent);
-        parent.setCalculateTransform();
 
         instance.texture = texture;
         instance.posRange = posRange.cpy();

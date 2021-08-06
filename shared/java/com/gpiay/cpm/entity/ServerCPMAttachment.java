@@ -102,11 +102,10 @@ public abstract class ServerCPMAttachment extends CPMAttachment {
 
     @Override
     public void synchronizeData(String mainModel, double scale, List<String> accessories) {
-        if (
-                setScale(scale, false) ||
-                setMainModel(mainModel, false) ||
-                setAccessories(accessories, false)
-        ) onModelUpdate();
+        boolean update = setScale(scale, false);
+        update = setMainModel(mainModel, false) || update;
+        update = setAccessories(accessories, false) || update;
+        if (update) onModelUpdate();
     }
 
     @Override

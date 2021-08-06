@@ -40,20 +40,18 @@ public class ModelInstance {
     public final LivingEntity entity;
     boolean physicsEnabled = false;
 
-    Skeleton<? extends EntityModel<LivingEntity>> skeleton;
-
     final Map<String, ModelBone.Instance> boneMap = Maps.newHashMap();
     final List<ModelBone.Instance> boneList = Lists.newArrayList();
     final Map<String, ModelPart.Instance> modelPartMap = Maps.newHashMap();
 
-    final Map<EnumAttachment, List<ModelBone.Instance>> attachments = Maps.newEnumMap(EnumAttachment.class);
     final Map<String, ParticleEmitter.Instance> particleEmitters = Maps.newHashMap();
     final Map<String, ItemModel.Instance> itemModels = Maps.newHashMap();
 
+    Skeleton<? extends EntityModel<LivingEntity>> skeleton;
+    final Map<EnumAttachment, List<ModelBone.Instance>> attachments = Maps.newEnumMap(EnumAttachment.class);
     final Map<HandSide, Set<ModelBone.Instance>> firstPersonBones = Maps.newEnumMap(HandSide.class);
     public boolean isRenderingFirstPerson = false;
     ModelBone.Instance eyePositionBone = null;
-
     List<ModelBone.Instance> stuckBones;
 
     ScriptContext scriptContext;
@@ -154,12 +152,10 @@ public class ModelInstance {
 
         if (physicsEnabled) {
             float netHeadYaw = calculateYaw();
-            skeleton.update(entity, entity.animationSpeed, entity.animationPosition, entity.tickCount + 1,
+            skeleton.update(entity, entity.animationPosition, entity.animationSpeed, entity.tickCount + 1,
                     netHeadYaw, entity.xRot, 1, scale, false);
-            evaluateAnimation(updateFunc, entity.animationSpeed, entity.animationPosition, entity.tickCount + 1,
-                    netHeadYaw, entity.xRot, 1, scale);
-            evaluateAnimation(tickFunc, entity.animationSpeed, entity.animationPosition, entity.tickCount + 1,
-                    netHeadYaw, entity.xRot, 1, scale);
+            evaluateAnimation(updateFunc, scale);
+            evaluateAnimation(tickFunc, scale);
 
             boolean success = true;
             try {
@@ -264,9 +260,9 @@ public class ModelInstance {
         }
     }
 
-    public void evaluateAnimation(JSObject func) {
-        evaluateAnimation(func, entity.attackAnim, entity.oAttackAnim, entity.tickCount + 1,
-                calculateYaw(), entity.xRot, 1, 1.0);
+    public void evaluateAnimation(JSObject func, double scale) {
+        evaluateAnimation(func, entity.animationPosition, entity.animationSpeed, entity.tickCount + 1,
+                calculateYaw(), entity.xRot, 1, scale);
     }
 
     public void evaluateAnimation(JSObject func, float animPos, float animSpeed, float age, float headYaw,
