@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.gpiay.cpm.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinLivingEntity",
+    "MixinPlayerEntity",
+    "MixinEntity",
+    "PlayerJoinHook"
+  ],
+  "client": [
+    "MixinLivingRenderer",
+    "MixinPlayerRenderer",
+    "MixinActiveRenderInfo",
+    "LivingRendererHook"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

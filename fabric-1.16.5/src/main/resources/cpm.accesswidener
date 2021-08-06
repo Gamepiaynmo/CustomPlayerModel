@@ -1,0 +1,89 @@
+accessWidener v1 named
+# Matrix3f internal values
+accessible field net/minecraft/util/math/vector/Matrix3f m00 F
+accessible field net/minecraft/util/math/vector/Matrix3f m01 F
+accessible field net/minecraft/util/math/vector/Matrix3f m02 F
+accessible field net/minecraft/util/math/vector/Matrix3f m10 F
+accessible field net/minecraft/util/math/vector/Matrix3f m11 F
+accessible field net/minecraft/util/math/vector/Matrix3f m12 F
+accessible field net/minecraft/util/math/vector/Matrix3f m20 F
+accessible field net/minecraft/util/math/vector/Matrix3f m21 F
+accessible field net/minecraft/util/math/vector/Matrix3f m22 F
+
+# Matrix4f internal values
+accessible field net/minecraft/util/math/vector/Matrix4f m00 F
+accessible field net/minecraft/util/math/vector/Matrix4f m01 F
+accessible field net/minecraft/util/math/vector/Matrix4f m02 F
+accessible field net/minecraft/util/math/vector/Matrix4f m03 F
+accessible field net/minecraft/util/math/vector/Matrix4f m10 F
+accessible field net/minecraft/util/math/vector/Matrix4f m11 F
+accessible field net/minecraft/util/math/vector/Matrix4f m12 F
+accessible field net/minecraft/util/math/vector/Matrix4f m13 F
+accessible field net/minecraft/util/math/vector/Matrix4f m20 F
+accessible field net/minecraft/util/math/vector/Matrix4f m21 F
+accessible field net/minecraft/util/math/vector/Matrix4f m22 F
+accessible field net/minecraft/util/math/vector/Matrix4f m23 F
+accessible field net/minecraft/util/math/vector/Matrix4f m30 F
+accessible field net/minecraft/util/math/vector/Matrix4f m31 F
+accessible field net/minecraft/util/math/vector/Matrix4f m32 F
+accessible field net/minecraft/util/math/vector/Matrix4f m33 F
+
+# QuadrupedModel ModelRenderers
+accessible field net/minecraft/client/renderer/entity/model/QuadrupedModel head Lnet/minecraft/client/renderer/model/ModelRenderer;
+accessible field net/minecraft/client/renderer/entity/model/QuadrupedModel body Lnet/minecraft/client/renderer/model/ModelRenderer;
+accessible field net/minecraft/client/renderer/entity/model/QuadrupedModel leg0 Lnet/minecraft/client/renderer/model/ModelRenderer;
+accessible field net/minecraft/client/renderer/entity/model/QuadrupedModel leg1 Lnet/minecraft/client/renderer/model/ModelRenderer;
+accessible field net/minecraft/client/renderer/entity/model/QuadrupedModel leg2 Lnet/minecraft/client/renderer/model/ModelRenderer;
+accessible field net/minecraft/client/renderer/entity/model/QuadrupedModel leg3 Lnet/minecraft/client/renderer/model/ModelRenderer;
+
+# SlimeModel cube
+accessible field net/minecraft/client/renderer/entity/model/SlimeModel cube Lnet/minecraft/client/renderer/model/ModelRenderer;
+
+# BipedModel poseRightArm poseLeftArm quadraticArmUpdate
+accessible method net/minecraft/client/renderer/entity/model/BipedModel poseLeftArm (Lnet/minecraft/entity/LivingEntity;)V
+accessible method net/minecraft/client/renderer/entity/model/BipedModel poseRightArm (Lnet/minecraft/entity/LivingEntity;)V
+accessible method net/minecraft/client/renderer/entity/model/BipedModel quadraticArmUpdate (F)F
+
+# LivingRenderer layers
+accessible field net/minecraft/client/renderer/entity/LivingRenderer layers Ljava/util/List;
+
+# EntityRenderer shadowRadius
+accessible field net/minecraft/client/renderer/entity/EntityRenderer shadowRadius F
+
+# EntityRendererManager playerRenderers
+accessible field net/minecraft/client/renderer/entity/EntityRendererManager playerRenderers Ljava/util/Map;
+
+# LayerRenderer renderer
+accessible field net/minecraft/client/renderer/entity/layers/LayerRenderer renderer Lnet/minecraft/client/renderer/entity/IEntityRenderer;
+
+# ModelRenderer cubes ModelBox polygons PositionTextureVertex TexturedQuad
+accessible field net/minecraft/client/renderer/model/ModelRenderer cubes Lit/unimi/dsi/fastutil/objects/ObjectList;
+accessible field net/minecraft/client/renderer/model/ModelRenderer$ModelBox polygons [Lnet/minecraft/client/renderer/model/ModelRenderer$TexturedQuad;
+mutable field net/minecraft/client/renderer/model/ModelRenderer$ModelBox polygons [Lnet/minecraft/client/renderer/model/ModelRenderer$TexturedQuad;
+accessible class net/minecraft/client/renderer/model/ModelRenderer$PositionTextureVertex
+accessible class net/minecraft/client/renderer/model/ModelRenderer$TexturedQuad
+
+# BipedArmorLayer getArmorModel
+accessible method net/minecraft/client/renderer/entity/layers/BipedArmorLayer getArmorModel (Lnet/minecraft/inventory/EquipmentSlotType;)Lnet/minecraft/client/renderer/entity/model/BipedModel;
+accessible method net/minecraft/client/renderer/entity/layers/BipedArmorLayer usesInnerModel (Lnet/minecraft/inventory/EquipmentSlotType;)Z
+accessible method net/minecraft/client/renderer/entity/layers/BipedArmorLayer getArmorLocation (Lnet/minecraft/item/ArmorItem;ZLjava/lang/String;)Lnet/minecraft/util/ResourceLocation;
+
+# ElytraLayer elytraModel
+accessible field net/minecraft/client/renderer/entity/layers/ElytraLayer elytraModel Lnet/minecraft/client/renderer/entity/model/ElytraModel;
+accessible field net/minecraft/client/renderer/entity/layers/ElytraLayer WINGS_LOCATION Lnet/minecraft/util/ResourceLocation;
+
+# HeadLayer scaleXYZ
+accessible field net/minecraft/client/renderer/entity/layers/HeadLayer scaleX F
+accessible field net/minecraft/client/renderer/entity/layers/HeadLayer scaleY F
+accessible field net/minecraft/client/renderer/entity/layers/HeadLayer scaleZ F
+
+# ParrotVariantLayer model
+accessible field net/minecraft/client/renderer/entity/layers/ParrotVariantLayer model Lnet/minecraft/client/renderer/entity/model/ParrotModel;
+
+# StuckInBodyLayer ArrowLayer BeeStingerLayer numStuck renderStuckItem
+accessible method net/minecraft/client/renderer/entity/layers/StuckInBodyLayer numStuck (Lnet/minecraft/entity/LivingEntity;)I
+accessible method net/minecraft/client/renderer/entity/layers/StuckInBodyLayer renderStuckItem (Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ILnet/minecraft/entity/Entity;FFFF)V
+accessible method net/minecraft/client/renderer/entity/layers/ArrowLayer numStuck (Lnet/minecraft/entity/LivingEntity;)I
+accessible method net/minecraft/client/renderer/entity/layers/ArrowLayer renderStuckItem (Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ILnet/minecraft/entity/Entity;FFFF)V
+accessible method net/minecraft/client/renderer/entity/layers/BeeStingerLayer numStuck (Lnet/minecraft/entity/LivingEntity;)I
+accessible method net/minecraft/client/renderer/entity/layers/BeeStingerLayer renderStuckItem (Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;ILnet/minecraft/entity/Entity;FFFF)V

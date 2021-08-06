@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "cpm",
+  "version": "${version}",
+
+  "name": "Custom Player Model",
+  "description": "Customize player/entity models in Minecraft using JSON & JavaScript.",
+  "authors": [
+    "Gamepiaynmo"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/custom-player-model-cpm-remake",
+    "sources": "https://github.com/Gamepiaynmo/CustomPlayerModel",
+    "issues": "https://github.com/Gamepiaynmo/CustomPlayerModel/issues"
+  },
+
+  "license": "MIT",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [ "com.gpiay.cpm.CPMEntry" ],
+    "client": [ "com.gpiay.cpm.CPMEntry" ],
+    "server": [ "com.gpiay.cpm.CPMEntry" ],
+    "cardinal-components-entity": [ "com.gpiay.cpm.entity.CPMComponentProvider" ],
+    "modmenu": [ "com.gpiay.cpm.config.CPMModMenu" ]
+  },
+  "mixins": [
+    "cpm.mixins.json"
+  ],
+  "accessWidener" : "cpm.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "fabric": "*",
+    "minecraft": "1.16.5",
+    "cloth-config-fabric": ">=4.11.26"
+  },
+  "suggests": {
+    "modmenu": ">=1.16.11"
+  },
+  "custom": {
+    "cardinal-components": [
+      "cpm:attachment"
+    ]
+  }
+}
