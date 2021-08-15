@@ -13,6 +13,11 @@ import java.util.List;
 public interface ICPMAttachment {
     String getMainModel();
     double getScale();
+    List<String> getAccessories();
+    void setAccessories(List<String> accessories);
+    void addAccessory(String accessory);
+    void removeAccessory(String accessory);
+    void clearAccessories();
 
     void setMainModel(String mainModel);
     void setScale(double scale);
@@ -23,12 +28,7 @@ public interface ICPMAttachment {
 
     void update();
 
-    List<String> getAccessories();
-    void addAccessory(String accessId);
-    void removeAccessory(String accessId);
-    void clearAccessories();
-
-    void synchronizeData(String mainModel, double scale, List<String> accessories);
+    void synchronizeData(String mainModel, Double scale, List<String> accessories);
 
     void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, float animPos,
             float animSpeed, float age, float headYaw, float headPitch, float partial);

@@ -93,6 +93,7 @@ public class ModelLoader {
 
         ModelPack modelPack = fromJson(id, mainModelJson, modelParts, textures, script);
         mainModelJson.close();
+        modelPack.id = id;
         return modelPack;
     }
 
@@ -183,17 +184,22 @@ public class ModelLoader {
 
                     JsonHelper.readArray(mainModel, () -> {
                         String partName = null;
+                        boolean doubleFace = false;
 
                         mainModel.beginObject();
                         while (mainModel.hasNext()) {
                             String partKey = mainModel.nextName();
                             switch (partKey) {
+                                case "double_face": {
+                                    doubleFace = mainModel.nextBoolean();
+                                    break;
+                                }
                                 case "name": {
                                     partName = mainModel.nextString();
                                     JsonReader partJson = partJsons.get(partName);
                                     if (partJson == null)
                                         throw new TranslatableJsonException("error.cpm.loadModel.partNotfound", mainModel, partName);
-                                    modelPack.modelParts.put(partName, BedrockModelParser.fromJson(partJson));
+                                    modelPack.modelParts.put(partName, BedrockModelParser.fromJson(partJson, doubleFace));
                                     break;
                                 }
                                 case "texture": {
@@ -355,6 +361,15 @@ public class ModelLoader {
                     });
                     break;
                 }
+                case "addons": {
+                    JsonHelper.readObject(mainModel, boneName -> {
+                        String attachName = mainModel.nextString();
+                        EnumAttachment attachment = EnumAttachment.getByAttachmentId(attachName)
+                                .orElseThrow(() -> new TranslatableJsonException("error.cpm.loadModel.unknownAttachment", mainModel, attachName));
+                        modelPack.addons.computeIfAbsent(attachment, k -> Lists.newArrayList()).add(boneName);
+                    });
+                    break;
+                }
                 default: {
                     if (ModelInfo.parseModelInfo(mainModel, key, modelPack))
                         mainModel.skipValue();
@@ -363,7 +378,7 @@ public class ModelLoader {
             }
         });
 
+        modelPack.validate();
         return modelPack;
     }
-
 }

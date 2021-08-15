@@ -38,6 +38,9 @@ public class QuadrupedBaseSkeleton<M extends CustomQuadrupedModel> extends Skele
     @Override
     public void addAttachments(EnumAttachment attachment, ModelInstance instance) {
         switch (attachment) {
+            case NONE:
+                addBuiltinAttachment(attachment, instance, "none");
+                break;
             case HELMET:
             case SKULL:
                 addBuiltinAttachment(attachment, instance, "head");

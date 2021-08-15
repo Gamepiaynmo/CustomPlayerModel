@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ElementParser {
-    public static ModelBone parseBone(ModelPart model, JsonReader reader) throws IOException {
+    public static ModelBone parseBone(ModelPart model, JsonReader reader, boolean doubleFace) throws IOException {
         ModelBone bone = new ModelBone();
 
         JsonHelper.readObject(reader, key -> {
@@ -39,7 +39,7 @@ public class ElementParser {
                 case "cubes": {
                     ModelRenderer identity = new ModelRenderer(0, 0, 0, 0);
                     JsonHelper.readArray(reader, () -> {
-                        Either<ModelRenderer, ModelRenderer.ModelBox> box = parseBox(model, reader, bone.position);
+                        Either<ModelRenderer, ModelRenderer.ModelBox> box = parseBox(model, reader, bone.position, doubleFace);
                         box.ifLeft(bone.boxes::add);
                         box.ifRight(identity.cubes::add);
                     });
@@ -56,7 +56,7 @@ public class ElementParser {
         return bone;
     }
 
-    public static Either<ModelRenderer, ModelRenderer.ModelBox> parseBox(ModelPart model, JsonReader reader, Vector3d pivot) throws IOException {
+    public static Either<ModelRenderer, ModelRenderer.ModelBox> parseBox(ModelPart model, JsonReader reader, Vector3d pivot, boolean doubleFace) throws IOException {
         int u = 0, v = 0;
         float x = 0, y = 0, z = 0, dx = 0, dy = 0, dz = 0, delta = 0;
         boolean mirror = false;
@@ -122,17 +122,17 @@ public class ElementParser {
         List<ModelRenderer.TexturedQuad> quads = Lists.newArrayList();
         if (dy != 0 || dz != 0) {
             quads.add(box.polygons[0]);
-            if (dx != 0)
+            if (dx != 0 || doubleFace)
                 quads.add(box.polygons[1]);
         }
         if (dx != 0 || dz != 0) {
             quads.add(box.polygons[2]);
-            if (dy != 0)
+            if (dy != 0 || doubleFace)
                 quads.add(box.polygons[3]);
         }
         if (dx != 0 || dy != 0) {
             quads.add(box.polygons[4]);
-            if (dz != 0)
+            if (dz != 0 || doubleFace)
                 quads.add(box.polygons[5]);
         }
 

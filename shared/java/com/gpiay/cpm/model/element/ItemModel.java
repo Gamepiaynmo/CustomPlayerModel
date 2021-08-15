@@ -1,6 +1,7 @@
 package com.gpiay.cpm.model.element;
 
 import com.gpiay.cpm.model.IComponent;
+import com.gpiay.cpm.model.ModelBase;
 import com.gpiay.cpm.model.ModelInstance;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -17,7 +18,7 @@ public class ItemModel extends ModelElement {
     public boolean enchanted;
 
     @Override
-    public Instance instantiate(ModelInstance model) {
+    public Instance instantiate(ModelBase model) {
         IModelBone parent = findParent(model, parentName);
         Instance instance = new Instance(name, model, parent);
         instance.itemId = itemId;
@@ -35,7 +36,7 @@ public class ItemModel extends ModelElement {
         public boolean enchanted;
         public ItemStack stack;
 
-        public Instance(String name, ModelInstance model, IModelBone parent) {
+        public Instance(String name, ModelBase model, IModelBone parent) {
             super(name, model);
             this.parent = parent;
         }

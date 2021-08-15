@@ -1,6 +1,7 @@
 package com.gpiay.cpm.model.element;
 
 import com.google.common.collect.Lists;
+import com.gpiay.cpm.model.ModelBase;
 import com.gpiay.cpm.model.ModelInstance;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class ModelPart extends ModelElement {
     public final List<ModelBone> bones = Lists.newArrayList();
 
     @Override
-    public Instance instantiate(ModelInstance model) {
+    public Instance instantiate(ModelBase model) {
         Instance instance = new Instance(name, model);
         instance.texture = texture;
         return instance;
@@ -21,7 +22,7 @@ public class ModelPart extends ModelElement {
         public String texture;
         public final List<ModelBone.Instance> bones = Lists.newArrayList();
 
-        public Instance(String name, ModelInstance model) {
+        public Instance(String name, ModelBase model) {
             super(name, model);
         }
 

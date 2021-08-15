@@ -28,6 +28,9 @@ public class ModelInfo {
     String description = "";
     String url = "";
 
+    public String id = "";
+    public boolean isAccessory = false;
+
     public boolean isCached;
     public double defaultScale = 1;
 
@@ -50,6 +53,16 @@ public class ModelInfo {
         if (pose == Pose.DYING)
             return Pose.SLEEPING;
         return pose;
+    }
+
+    public void assertAccessory() {
+        if (!isAccessory)
+            throw new TranslatableException("error.cpm.notAccessory");
+    }
+
+    public void assertModel() {
+        if (isAccessory)
+            throw new TranslatableException("error.cpm.notModel");
     }
 
     interface IResource {
@@ -201,6 +214,7 @@ public class ModelInfo {
 
         ModelInfo modelInfo = loadFromJson(mainModelJson);
         mainModelJson.close();
+        modelInfo.id = loadData.modelId;
         return modelInfo;
     }
 
@@ -212,6 +226,7 @@ public class ModelInfo {
                 mainModel.skipValue();
         });
 
+        modelInfo.validate();
         return modelInfo;
     }
 
@@ -231,6 +246,9 @@ public class ModelInfo {
                 break;
             case "url":
                 modelInfo.url = mainModel.nextString();
+                break;
+            case "accessory":
+                modelInfo.isAccessory = mainModel.nextBoolean();
                 break;
             case "default_scale":
                 modelInfo.defaultScale = mainModel.nextDouble();
@@ -300,18 +318,21 @@ public class ModelInfo {
     }
 
     public void toBuffer(PacketBuffer buffer) {
+        buffer.writeUtf(id);
+        buffer.writeBoolean(isAccessory);
         buffer.writeUtf(name);
         buffer.writeUtf(version);
         buffer.writeUtf(description);
         buffer.writeUtf(url);
         buffer.writeInt(author.size());
-        for (String author : author) {
+        for (String author : author)
             buffer.writeUtf(author);
-        }
     }
 
     public void fromBuffer(PacketBuffer buffer) {
         author.clear();
+        id = buffer.readUtf();
+        isAccessory = buffer.readBoolean();
         name = buffer.readUtf();
         version = buffer.readUtf();
         description = buffer.readUtf();
@@ -319,5 +340,10 @@ public class ModelInfo {
         int authors = buffer.readInt();
         for (int i = 0; i < authors; i++)
             author.add(buffer.readUtf());
+    }
+
+    public void validate() {
+        if (name.isEmpty())
+            throw new TranslatableException("error.cpm.loadModel.noModelName");
     }
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class BedrockModelParser {
-    public static List<ModelPart> fromJson(JsonReader reader) throws IOException {
+    public static List<ModelPart> fromJson(JsonReader reader, boolean doubleFace) throws IOException {
         List<ModelPart> models = Lists.newArrayList();
         boolean legacy = false;
 
@@ -26,11 +26,11 @@ public class BedrockModelParser {
             }
 
             if (legacy && key.startsWith("geometry")) {
-                models.add(parseLegacyModel(reader));
+                models.add(parseLegacyModel(reader, doubleFace));
             }
 
             if (!legacy && "minecraft:geometry".equals(key)) {
-                JsonHelper.readArray(reader, () -> models.add(parseBedrockModel(reader)));
+                JsonHelper.readArray(reader, () -> models.add(parseBedrockModel(reader, doubleFace)));
             }
         }
 
@@ -39,7 +39,7 @@ public class BedrockModelParser {
         return models;
     }
 
-    private static ModelPart parseLegacyModel(JsonReader reader) throws IOException {
+    private static ModelPart parseLegacyModel(JsonReader reader, boolean doubleFace) throws IOException {
         ModelPart model = new ModelPart();
 
         JsonHelper.readObject(reader, key -> {
@@ -48,7 +48,7 @@ public class BedrockModelParser {
                 case "textureheight": model.textureHeight = reader.nextInt(); break;
                 case "bones": {
                     JsonHelper.readArray(reader, () -> {
-                        model.bones.add(ElementParser.parseBone(model, reader));
+                        model.bones.add(ElementParser.parseBone(model, reader, doubleFace));
                     });
 
                     break;
@@ -60,7 +60,7 @@ public class BedrockModelParser {
         return model;
     }
 
-    private static ModelPart parseBedrockModel(JsonReader reader) throws IOException {
+    private static ModelPart parseBedrockModel(JsonReader reader, boolean doubleFace) throws IOException {
         ModelPart model = new ModelPart();
 
         JsonHelper.readObject(reader, key -> {
@@ -78,7 +78,7 @@ public class BedrockModelParser {
                 }
                 case "bones": {
                     JsonHelper.readArray(reader, () -> {
-                        model.bones.add(ElementParser.parseBone(model, reader));
+                        model.bones.add(ElementParser.parseBone(model, reader, doubleFace));
                     });
 
                     break;

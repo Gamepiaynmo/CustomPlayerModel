@@ -2,6 +2,7 @@ package com.gpiay.cpm.client.render;
 
 import com.gpiay.cpm.entity.AttachmentProvider;
 import com.gpiay.cpm.entity.ClientCPMAttachment;
+import com.gpiay.cpm.model.AccessoryInstance;
 import com.gpiay.cpm.model.ModelInstance;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -27,15 +28,18 @@ public class CPMLayer<T extends LivingEntity, M extends EntityModel<T>> extends 
         if (entityRenderer.shadowRadius == lastShadowSize)
             entityRenderer.shadowRadius = initialShadowSize;
 
-        AttachmentProvider.getEntityAttachment(entityIn).ifPresent(cap -> {
-            ModelInstance model = ((ClientCPMAttachment) cap).getModel();
-            if (model != null) {
-                model.render(matrixStackIn, bufferIn, packedLightIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, cap.getScale());
+        AttachmentProvider.getEntityAttachment(entityIn).ifPresent(attach -> {
+            ClientCPMAttachment clientAttach = (ClientCPMAttachment) attach;
+            ModelInstance model = clientAttach.getModel();
+            if (model != null && model.isReady()) {
+                model.render(matrixStackIn, bufferIn, packedLightIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, attach.getScale());
+                for (AccessoryInstance instance : clientAttach.getAccessoryModels())
+                    instance.render(matrixStackIn, bufferIn, packedLightIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, attach.getScale());
 
                 float shadowSize = model.getModelPack().shadowSize;
                 if (shadowSize >= 0)
                     entityRenderer.shadowRadius = shadowSize;
-                entityRenderer.shadowRadius *= (float) cap.getScale();
+                entityRenderer.shadowRadius *= (float) attach.getScale();
             }
         });
 

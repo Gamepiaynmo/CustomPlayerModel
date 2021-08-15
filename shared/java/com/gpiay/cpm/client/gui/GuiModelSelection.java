@@ -63,11 +63,11 @@ public class GuiModelSelection extends Screen {
         modelList.addAll(serverModelList);
         Set<String> modelIds = Sets.newHashSet();
         for (ModelEntry entry : serverModelList)
-            modelIds.add(entry.id);
+            modelIds.add(entry.info.id);
 
         if (!CPMMod.cpmClient.isServerModded || (CPMConfig.sendModels() && CPMConfig.receiveModels())) {
             for (ModelEntry info : CPMMod.cpmServer.modelManager.getModelList())
-                if (modelIds.add(info.id))
+                if (modelIds.add(info.info.id))
                     modelList.add(info);
         }
 
@@ -75,7 +75,7 @@ public class GuiModelSelection extends Screen {
             try {
                 CPMMod.startRecordingError();
                 for (ModelEntry info : CPMMod.cpmClient.modelManager.getEditingModelList())
-                    if (modelIds.add(info.id))
+                    if (modelIds.add(info.info.id))
                         modelList.add(info);
                 for (Exception e : CPMMod.endRecordingError())
                     throw e;
@@ -177,8 +177,6 @@ public class GuiModelSelection extends Screen {
     public boolean charTyped(char typedChar, int keyCode) {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             minecraft.setScreen(null);
-        } else {
-            searchInput.charTyped(typedChar, keyCode);
         }
 
         return super.charTyped(typedChar, keyCode);
@@ -204,18 +202,25 @@ public class GuiModelSelection extends Screen {
                 try {
                     if (CPMMod.cpmClient.isServerModded) {
                         if (model.isLocal && model.isEditing) {
-                            sendMessage("/" + CPMMod.MOD_ID + " clear", false);
+                            if (model.info.isAccessory)
+                                sendMessage("/" + CPMMod.MOD_ID + " accessory clear", false);
+                            else sendMessage("/" + CPMMod.MOD_ID + " model clear", false);
                             CPMMod.startRecordingError();
                             AttachmentProvider.getEntityAttachment(minecraft.player).ifPresent(attachment ->
-                                    ((ClientCPMAttachment) attachment).loadEditingModel(model.id));
+                                    ((ClientCPMAttachment) attachment).loadEditingModel(model.info.id));
                             for (Exception e : CPMMod.endRecordingError())
                                 throw e;
                         } else {
-                            sendMessage("/" + CPMMod.MOD_ID + " select " + model.id, false);
+                            if (model.info.isAccessory)
+                                sendMessage("/" + CPMMod.MOD_ID + " accessory add " + model.info.id, false);
+                            else sendMessage("/" + CPMMod.MOD_ID + " model select " + model.info.id, false);
                         }
                     } else {
-                        AttachmentProvider.getEntityAttachment(minecraft.player).ifPresent(attachment ->
-                                attachment.setMainModel(model.id));
+                        AttachmentProvider.getEntityAttachment(minecraft.player).ifPresent(attachment -> {
+                            if (model.info.isAccessory)
+                                attachment.addAccessory(model.info.id);
+                            else attachment.setMainModel(model.info.id);
+                        });
                     }
                 } catch (Exception e) {
                     CPMMod.print(e);
@@ -223,9 +228,9 @@ public class GuiModelSelection extends Screen {
             } else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
                 ItemStack itemStack = minecraft.player.getMainHandItem();
                 if (!itemStack.isEmpty() && itemStack.getItem() instanceof TransformationItem) {
-                    sendMessage("/" + CPMMod.MOD_ID + " create " + model.id + " " + sliderPos);
+                    sendMessage("/" + CPMMod.MOD_ID + " create " + model.info.id + " " + sliderPos);
                 } else {
-                    minecraft.keyboardHandler.setClipboard(model.id);
+                    minecraft.keyboardHandler.setClipboard(model.info.id);
                     Minecraft.getInstance().gui.getChat().addMessage(new TranslationTextComponent("gui.cpm.clipboard"));
                 }
             }
@@ -248,7 +253,7 @@ public class GuiModelSelection extends Screen {
 
     private void clearModel() {
         if (CPMMod.cpmClient.isServerModded) {
-            sendMessage("/" + CPMMod.MOD_ID + " clear", false);
+            sendMessage("/" + CPMMod.MOD_ID + " model clear", false);
         } else {
             AttachmentProvider.getEntityAttachment(minecraft.player).ifPresent(attachment -> attachment.setMainModel(""));
         }

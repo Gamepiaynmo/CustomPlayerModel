@@ -3,6 +3,7 @@ package com.gpiay.cpm.server;
 import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.config.CPMConfig;
 import com.gpiay.cpm.entity.AttachmentProvider;
+import com.gpiay.cpm.entity.ICPMAttachment;
 import com.gpiay.cpm.entity.ServerCPMAttachment;
 import com.gpiay.cpm.item.TransformationItem;
 import com.gpiay.cpm.util.function.ExceptionFunction;
@@ -71,55 +72,129 @@ public class CPMCommand {
 
     public static void registerCommand(CommandDispatcher<CommandSource> dispatcher) {
         dispatcher.register(Commands.literal(CPMMod.MOD_ID)
-                .then(Commands.literal("select")
-                        .then(Commands.argument("model", StringArgumentType.word())
+                .then(Commands.literal("model")
+                        .then(Commands.literal("select")
+                                .then(Commands.argument("model", StringArgumentType.word())
+                                        .requires(permission("cpm.command.selectSelf"))
+                                        .executes(execute(context -> {
+                                            String modelId = context.getArgument("model", String.class);
+                                            if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
+                                                AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(attachment ->
+                                                        ((ServerCPMAttachment) attachment).setMainModel(modelId, getPlayerOrNull(context.getSource())));
+                                            }
+                                            return 1;
+                                        }))
+                                        .then(Commands.argument("targets", EntityArgument.entities())
+                                                .requires(permission("cpm.command.selectOthers"))
+                                                .executes(execute(context -> {
+                                                    String modelId = context.getArgument("model", String.class);
+                                                    Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
+                                                    if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
+                                                        for (Entity entity : entities) {
+                                                            boolean[] shouldBreak = {false};
+                                                            AttachmentProvider.getEntityAttachment(entity).ifPresent(attach -> {
+                                                                ServerCPMAttachment attachment = (ServerCPMAttachment) attach;
+                                                                attachment.setMainModel(modelId, getPlayerOrNull(context.getSource()));
+                                                                if (!attachment.getMainModel().equals(modelId))
+                                                                    shouldBreak[0] = true;
+                                                            });
+
+                                                            if (shouldBreak[0])
+                                                                break;
+                                                        }
+                                                    }
+                                                    return entities.size();
+                                                })))))
+                        .then(Commands.literal("clear")
                                 .requires(permission("cpm.command.selectSelf"))
                                 .executes(execute(context -> {
-                                    String modelId = context.getArgument("model", String.class);
-                                    if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
-                                        AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(attachment ->
-                                                ((ServerCPMAttachment) attachment).setMainModel(modelId, getPlayerOrNull(context.getSource())));
-                                    }
+                                    AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(attachment ->
+                                            attachment.setMainModel(""));
                                     return 1;
                                 }))
                                 .then(Commands.argument("targets", EntityArgument.entities())
                                         .requires(permission("cpm.command.selectOthers"))
                                         .executes(execute(context -> {
-                                            String modelId = context.getArgument("model", String.class);
                                             Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
-                                            if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
-                                                for (Entity entity : entities) {
-                                                    boolean[] shouldBreak = {false};
-                                                    AttachmentProvider.getEntityAttachment(entity).ifPresent(attach -> {
-                                                        ServerCPMAttachment attachment = (ServerCPMAttachment) attach;
-                                                        attachment.setMainModel(modelId, getPlayerOrNull(context.getSource()));
-                                                        if (!attachment.getMainModel().equals(modelId))
-                                                            shouldBreak[0] = true;
-                                                    });
-
-                                                    if (shouldBreak[0])
-                                                        break;
-                                                }
+                                            for (Entity entity : entities) {
+                                                AttachmentProvider.getEntityAttachment(entity).ifPresent(attachment ->
+                                                        attachment.setMainModel(""));
                                             }
                                             return entities.size();
                                         })))))
-                .then(Commands.literal("clear")
-                        .requires(permission("cpm.command.selectSelf"))
-                        .executes(execute(context -> {
-                            AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(attachment ->
-                                    attachment.setMainModel(""));
-                            return 1;
-                        }))
-                        .then(Commands.argument("targets", EntityArgument.entities())
-                                .requires(permission("cpm.command.selectOthers"))
+                .then(Commands.literal("accessory")
+                        .then(Commands.literal("add")
+                                .then(Commands.argument("model", StringArgumentType.word())
+                                        .requires(permission("cpm.command.selectSelf"))
+                                        .executes(execute(context -> {
+                                            String modelId = context.getArgument("model", String.class);
+                                            if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
+                                                AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(attachment ->
+                                                        ((ServerCPMAttachment) attachment).addAccessory(modelId, getPlayerOrNull(context.getSource())));
+                                            }
+                                            return 1;
+                                        }))
+                                        .then(Commands.argument("targets", EntityArgument.entities())
+                                                .requires(permission("cpm.command.selectOthers"))
+                                                .executes(execute(context -> {
+                                                    String modelId = context.getArgument("model", String.class);
+                                                    Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
+                                                    if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
+                                                        for (Entity entity : entities) {
+                                                            boolean[] shouldBreak = {false};
+                                                            AttachmentProvider.getEntityAttachment(entity).ifPresent(attach -> {
+                                                                ServerCPMAttachment attachment = (ServerCPMAttachment) attach;
+                                                                attachment.addAccessory(modelId, getPlayerOrNull(context.getSource()));
+                                                                if (!attachment.getAccessories().contains(modelId))
+                                                                    shouldBreak[0] = true;
+                                                            });
+
+                                                            if (shouldBreak[0])
+                                                                break;
+                                                        }
+                                                    }
+                                                    return entities.size();
+                                                })))))
+                        .then(Commands.literal("remove")
+                                .then(Commands.argument("model", StringArgumentType.word())
+                                        .requires(permission("cpm.command.selectSelf"))
+                                        .executes(execute(context -> {
+                                            String modelId = context.getArgument("model", String.class);
+                                            if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
+                                                AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(attachment ->
+                                                        attachment.removeAccessory(modelId));
+                                            }
+                                            return 1;
+                                        }))
+                                        .then(Commands.argument("targets", EntityArgument.entities())
+                                                .requires(permission("cpm.command.selectOthers"))
+                                                .executes(execute(context -> {
+                                                    String modelId = context.getArgument("model", String.class);
+                                                    Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
+                                                    if (hasPermission(modelId, context.getSource().getPlayerOrException())) {
+                                                        for (Entity entity : entities) {
+                                                            AttachmentProvider.getEntityAttachment(entity).ifPresent(attach -> {
+                                                                ServerCPMAttachment attachment = (ServerCPMAttachment) attach;
+                                                                attachment.removeAccessory(modelId);
+                                                            });
+                                                        }
+                                                    }
+                                                    return entities.size();
+                                                })))))
+                        .then(Commands.literal("clear")
+                                .requires(permission("cpm.command.selectSelf"))
                                 .executes(execute(context -> {
-                                    Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
-                                    for (Entity entity : entities) {
-                                        AttachmentProvider.getEntityAttachment(entity).ifPresent(attachment ->
-                                                attachment.setMainModel(""));
-                                    }
-                                    return entities.size();
-                                }))))
+                                    AttachmentProvider.getEntityAttachment(context.getSource().getPlayerOrException()).ifPresent(ICPMAttachment::clearAccessories);
+                                    return 1;
+                                }))
+                                .then(Commands.argument("targets", EntityArgument.entities())
+                                        .requires(permission("cpm.command.selectOthers"))
+                                        .executes(execute(context -> {
+                                            Collection<? extends Entity> entities = EntityArgument.getEntities(context, "targets");
+                                            for (Entity entity : entities)
+                                                AttachmentProvider.getEntityAttachment(entity).ifPresent(ICPMAttachment::clearAccessories);
+                                            return entities.size();
+                                        })))))
                 .then(Commands.literal("scale")
                         .then(Commands.argument("scale", DoubleArgumentType.doubleArg())
                                 .requires(permission("cpm.command.scaleSelf"))
@@ -145,8 +220,10 @@ public class CPMCommand {
                                 .executes(execute(context -> {
                                     PlayerEntity player = context.getSource().getPlayerOrException();
                                     ItemStack itemStack = player.getMainHandItem();
-                                    if (!itemStack.isEmpty() && itemStack.getItem() instanceof TransformationItem)
-                                        itemStack.getOrCreateTag().putString("model", context.getArgument("model", String.class));
+                                    if (!itemStack.isEmpty() && itemStack.getItem() instanceof TransformationItem) {
+                                        TransformationItem transItem = ((TransformationItem) itemStack.getItem());
+                                        transItem.setModel(itemStack, context.getArgument("model", String.class));
+                                    }
                                     else throw ERROR_ITEM.create();
                                     return 1;
                                 }))
@@ -155,8 +232,9 @@ public class CPMCommand {
                                             PlayerEntity player = context.getSource().getPlayerOrException();
                                             ItemStack itemStack = player.getMainHandItem();
                                             if (!itemStack.isEmpty() && itemStack.getItem() instanceof TransformationItem) {
-                                                itemStack.getOrCreateTag().putString("model", context.getArgument("model", String.class));
-                                                itemStack.getOrCreateTag().putDouble("scale", context.getArgument("scale", Double.class));
+                                                TransformationItem transItem = ((TransformationItem) itemStack.getItem());
+                                                transItem.setModel(itemStack, context.getArgument("model", String.class));
+                                                transItem.setScale(itemStack, context.getArgument("scale", Double.class));
                                             }
                                             else throw ERROR_ITEM.create();
                                             return 1;

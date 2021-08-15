@@ -1,14 +1,15 @@
 package com.gpiay.cpm.model.animation;
 
+import com.gpiay.cpm.model.ModelBase;
 import com.gpiay.cpm.model.ModelInstance;
 import com.gpiay.cpm.model.element.IModelBone;
 import com.gpiay.cpm.model.element.ItemModel;
 import com.gpiay.cpm.model.element.ParticleEmitter;
 
 public class ScriptModel {
-    private final ModelInstance model;
+    private final ModelBase model;
 
-    public ScriptModel(ModelInstance model) {
+    public ScriptModel(ModelBase model) {
         this.model = model;
     }
 
@@ -36,6 +37,6 @@ public class ScriptModel {
     }
 
     public boolean isFirstPerson() {
-        return model.isRenderingFirstPerson;
+        return ModelInstance.isRenderingFirstPerson;
     }
 }

@@ -90,7 +90,7 @@ public class ServerModelManager extends ModelManager {
 
             if (!modelInfo.isCached) {
                 if (local || hasPermission(modelId, player))
-                    modelList.add(new ModelEntry(modelId, modelInfo, local));
+                    modelList.add(new ModelEntry(modelInfo, local));
             }
         }
 

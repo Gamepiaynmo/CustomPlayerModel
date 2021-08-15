@@ -26,22 +26,6 @@ public abstract class MixinLivingRenderer extends EntityRenderer<LivingEntity> i
         super(p_i46179_1_);
     }
 
-    @Redirect(
-            method = "render(Lnet/minecraft/entity/LivingEntity;FFLcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;I)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/entity/model/EntityModel;renderToBuffer(Lcom/mojang/blaze3d/matrix/MatrixStack;Lcom/mojang/blaze3d/vertex/IVertexBuilder;IIFFFF)V"
-            )
-    )
-    public void renderToBuffer(EntityModel entityModel, MatrixStack matrixStack, IVertexBuilder vertexBuilder, int light, int lightCoord, float colorR, float colorG, float colorB, float colorA,
-            LivingEntity entity, float yaw, float partial, MatrixStack unused1, IRenderTypeBuffer renderType, int unused2) {
-        AttachmentProvider.getEntityAttachment(entity).ifPresent(attachment -> {
-            ModelInstance model = ((ClientCPMAttachment) attachment).getModel();
-            if (model == null)
-                entityModel.renderToBuffer(matrixStack, vertexBuilder, light, lightCoord, colorR, colorG, colorB, colorA);
-        });
-    }
-
     @Shadow
     protected abstract float getBob(LivingEntity p_77044_1_, float p_77044_2_);
 

@@ -23,16 +23,14 @@ public class ModelListPacket implements PacketEncoder {
         for (int i = 0; i < length; i++) {
             ModelInfo info = new ModelInfo();
             info.fromBuffer(buffer);
-            modelList.add(new ModelEntry(buffer.readUtf(), info, false));
+            modelList.add(new ModelEntry(info, false));
         }
     }
 
     public void toBytes(PacketBuffer buffer) {
         buffer.writeInt(modelList.size());
-        for (ModelEntry entry : modelList) {
+        for (ModelEntry entry : modelList)
             entry.info.toBuffer(buffer);
-            buffer.writeUtf(entry.id);
-        }
     }
 
     public void handleClient(TaskScheduler scheduler) {

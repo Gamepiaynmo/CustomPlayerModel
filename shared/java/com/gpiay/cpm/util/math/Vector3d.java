@@ -149,6 +149,14 @@ public class Vector3d {
 		return this.set(this.x * vx, this.y * vy, this.z * vz);
 	}
 
+	public Vector3d div (double scalar) {
+		return this.set(this.x / scalar, this.y / scalar, this.z / scalar);
+	}
+
+	public Vector3d inv () {
+		return this.set(1 / this.x, 1 / this.y, 1 / this.z);
+	}
+
 	public Vector3d mulAdd (Vector3d vec, double scalar) {
 		this.x += vec.x * scalar;
 		this.y += vec.y * scalar;

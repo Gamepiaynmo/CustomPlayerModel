@@ -6,10 +6,7 @@ import com.google.common.collect.Sets;
 import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.entity.AttachmentProvider;
 import com.gpiay.cpm.entity.ClientCPMAttachment;
-import com.gpiay.cpm.model.ModelInfo;
-import com.gpiay.cpm.model.ModelInstance;
-import com.gpiay.cpm.model.ModelLoader;
-import com.gpiay.cpm.model.ModelPack;
+import com.gpiay.cpm.model.*;
 import com.gpiay.cpm.network.NetworkHandler;
 import com.gpiay.cpm.network.packet.QueryModelPacket;
 import com.gpiay.cpm.server.ModelManager;
@@ -58,11 +55,10 @@ public class ClientModelManager extends ModelManager {
                             if (playerEntity != null) {
                                 AttachmentProvider.getEntityAttachment(playerEntity).ifPresent(attachment -> {
                                     ClientCPMAttachment clientAttach = (ClientCPMAttachment) attachment;
-                                    if (clientAttach.getMainModel().isEmpty() && clientAttach.getModel() != null) {
+                                    if ((clientAttach.getMainModel().isEmpty() && clientAttach.getModel() != null)
+                                            || (clientAttach.getAccessories().isEmpty() && !clientAttach.getAccessoryModels().isEmpty())) {
                                         try {
-                                            clientAttach.setMainModel("");
                                             clearEditingModelPack();
-
                                             CPMMod.startRecordingError();
                                             clientAttach.loadEditingModel(cpmClient.editingModel.getName());
                                             for (Exception e : CPMMod.endRecordingError())
@@ -146,7 +142,7 @@ public class ClientModelManager extends ModelManager {
                 try {
                     if (file.isDirectory()) {
                         ModelInfo modelInfo = ModelInfo.fromDirectory(file);
-                        ModelEntry modelEntry = new ModelEntry(file.getName(), modelInfo, true);
+                        ModelEntry modelEntry = new ModelEntry(modelInfo, true);
                         modelEntry.isEditing = true;
                         modelList.add(modelEntry);
                     }
@@ -179,9 +175,13 @@ public class ClientModelManager extends ModelManager {
 
                 for (Entity entity : Minecraft.getInstance().level.entitiesForRendering()) {
                     AttachmentProvider.getEntityAttachment(entity).ifPresent(attachment -> {
-                        ModelInstance model = ((ClientCPMAttachment) attachment).getModel();
-                        if (model != null)
+                        ClientCPMAttachment clientAttach = (ClientCPMAttachment) attachment;
+                        ModelInstance model = clientAttach.getModel();
+                        if (model != null) {
                             model.getModelPack().refCnt++;
+                            for (AccessoryInstance instance : clientAttach.getAccessoryModels())
+                                instance.getModelPack().refCnt++;
+                        }
                     });
                 }
 

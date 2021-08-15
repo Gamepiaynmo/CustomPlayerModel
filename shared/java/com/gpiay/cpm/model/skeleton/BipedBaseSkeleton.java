@@ -6,6 +6,8 @@ import com.gpiay.cpm.model.ModelInstance;
 import com.gpiay.cpm.model.element.VanillaBone;
 import com.gpiay.cpm.model.skeleton.model.CustomBipedModel;
 import com.gpiay.cpm.util.math.Vector3d;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.CrossbowItem;
@@ -90,6 +92,7 @@ public class BipedBaseSkeleton<M extends CustomBipedModel> extends Skeleton<M> {
             entityModel.attackTime = 0.0f;
             entityModel.crouching = false;
             entityModel.swimAmount = 0.0f;
+            setupModelAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
             entityModel.setupAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
             entityModel.leftArm.xRot = 0.0f;
             entityModel.rightArm.xRot = 0.0f;
@@ -122,6 +125,9 @@ public class BipedBaseSkeleton<M extends CustomBipedModel> extends Skeleton<M> {
     @Override
     public void addAttachments(EnumAttachment attachment, ModelInstance instance) {
         switch (attachment) {
+            case NONE:
+                addBuiltinAttachment(attachment, instance, "none");
+                break;
             case HELMET:
             case SKULL:
                 addBuiltinAttachment(attachment, instance, "head");

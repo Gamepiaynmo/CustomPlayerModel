@@ -2,6 +2,7 @@ package com.gpiay.cpm.model.element;
 
 import com.gpiay.cpm.client.particle.CPMParticle;
 import com.gpiay.cpm.model.IComponent;
+import com.gpiay.cpm.model.ModelBase;
 import com.gpiay.cpm.model.ModelInstance;
 import com.gpiay.cpm.util.math.Matrix4d;
 import com.gpiay.cpm.util.math.Quat4d;
@@ -37,7 +38,7 @@ public class ParticleEmitter extends ModelElement {
     }
 
     @Override
-    public Instance instantiate(ModelInstance model) {
+    public Instance instantiate(ModelBase model) {
         IModelBone parent = findParent(model, parentName);
         Instance instance = new Instance(name, model, parent);
 
@@ -79,7 +80,7 @@ public class ParticleEmitter extends ModelElement {
         private double timer;
         public boolean released = false;
 
-        public Instance(String name, ModelInstance model, IModelBone parent) {
+        public Instance(String name, ModelBase model, IModelBone parent) {
             super(name, model);
             this.parent = parent;
         }

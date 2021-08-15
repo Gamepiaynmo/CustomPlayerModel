@@ -33,7 +33,7 @@ public abstract class MixinEntity implements INameable, ICommandSource {
 
     @Inject(
             at = @At("RETURN"),
-            method = "getEyePosition(F)Lnet/minecraft/util/math/vector/Vector3d;",
+            method = "Lnet/minecraft/entity/Entity;getEyePosition(F)Lnet/minecraft/util/math/vector/Vector3d;",
             cancellable = true
     )
     public void getEyePosition(float partial, CallbackInfoReturnable<net.minecraft.util.math.vector.Vector3d> info) {

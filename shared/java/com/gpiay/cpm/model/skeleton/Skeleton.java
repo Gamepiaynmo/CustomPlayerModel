@@ -2,12 +2,15 @@ package com.gpiay.cpm.model.skeleton;
 
 import com.google.common.collect.Maps;
 import com.gpiay.cpm.model.EnumAttachment;
+import com.gpiay.cpm.model.ModelBase;
 import com.gpiay.cpm.model.ModelInstance;
 import com.gpiay.cpm.model.element.BlankBone;
 import com.gpiay.cpm.model.element.IModelBone;
 import com.gpiay.cpm.model.element.ModelBone;
 import com.gpiay.cpm.model.element.VanillaBone;
 import com.gpiay.cpm.util.math.Vector3d;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
@@ -43,7 +46,8 @@ public abstract class Skeleton<M extends EntityModel<LivingEntity>> {
     public void addAttachments(EnumAttachment attachment, ModelInstance instance) {
         instance.allocateAttachment(attachment);
     }
-    public void tick(LivingEntity entity) {};
+    public void tick(LivingEntity entity) {
+    }
 
     protected void adjustBones(LivingEntity entity, double scale, float partialTicks) {
         for (VanillaBone bone : vanillaBones.values())
@@ -51,6 +55,11 @@ public abstract class Skeleton<M extends EntityModel<LivingEntity>> {
     }
 
     public List<String> getFirstPersonBones(HandSide hand) { return Collections.emptyList(); }
+
+    public void setupModelAnim(LivingEntity entity, float animPos, float animSpeed, float age, float headYaw, float headPitch) {
+        LivingRenderer<LivingEntity, ?> renderer = (LivingRenderer<LivingEntity, ?>) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+        renderer.getModel().setupAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
+    }
 
     public void update(LivingEntity entity, float animPos, float animSpeed, float age, float headYaw,
                        float headPitch, float partial, double scale, boolean firstPerson) {
@@ -61,6 +70,9 @@ public abstract class Skeleton<M extends EntityModel<LivingEntity>> {
         entityModel.riding = entity.isPassenger();
 #endif
         entityModel.young = entity.isBaby();
+
+        if (partial == 1.0)
+            setupModelAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
 
         entityModel.prepareMobModel(entity, animPos, animSpeed, partial);
         entityModel.setupAnim(entity, animPos, animSpeed, age, headYaw, headPitch);

@@ -3,6 +3,7 @@ package com.gpiay.cpm.model;
 import java.util.Optional;
 
 public enum EnumAttachment {
+    NONE("none"),
     HELMET("helmet"),
     CHESTPLATE_BODY("chestplate_body"),
     CHESTPLATE_LEFT("chestplate_left"),

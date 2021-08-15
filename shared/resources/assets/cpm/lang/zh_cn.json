@@ -8,12 +8,14 @@
   "text.autoconfig.cpm.option.client.sendModels": "发送模型",
   "text.autoconfig.cpm.option.server.customEyeHeight": "允许改变视角高度",
   "text.autoconfig.cpm.option.server.customBoundingBox": "允许改变碰撞体积",
+  "text.autoconfig.cpm.option.server.customEyePosition": "允许改变视角位置",
   "text.autoconfig.cpm.option.server.receiveModels": "接收模型",
   "text.autoconfig.cpm.option.perm.selectSelf": "更换自己的模型",
   "text.autoconfig.cpm.option.perm.selectOthers": "更换他人的模型",
   "text.autoconfig.cpm.option.perm.scaleSelf": "缩放自己的模型",
   "text.autoconfig.cpm.option.perm.scaleOthers": "缩放他人的模型",
   "text.autoconfig.cpm.option.perm.refresh": "刷新本地模型文件",
+  "text.autoconfig.cpm.option.perm.createItem": "创建变形物品",
   "text.autoconfig.cpm.option.perm.models": "模型权限",
 
   "text.cpm.modelInfo.id": "ID：%s",
@@ -23,6 +25,7 @@
   "text.cpm.modelInfo.client": "客户端模型",
   "text.cpm.modelInfo.otherClient": "客户端上传模型",
   "text.cpm.modelUploaded": "模型已上传至服务端，请再次选择模型。",
+  "text.cpm.modelReloaded": "模型已重新加载。",
 
   "key.cpm.category": "自定义玩家模型",
   "key.cpm.selectModel": "自定义模型选择界面",
@@ -61,22 +64,33 @@
   "error.cpm.loadModel.unknownVersion": "未知基岩版实体模型文件版本：%s",
   "error.cpm.loadModel.partNotfound": "模型分部未找到：%s",
   "error.cpm.loadModel.unknownAttachment": "未知附加物体：%s",
+  "error.cpm.loadModel.noModelName": "需要指定模型名称",
+  "error.cpm.loadModel.noSkeleton": "需要指定结构类型",
+  "error.cpm.notModel": "不是生物模型",
+  "error.cpm.notAccessory": "不是饰品模型",
   "error.cpm.script.eval": "运行脚本时出错%s：",
+  "error.cpm.wrongItem": "未持有变形物品",
 
   "command.cpm.list": "当前共有%d个模型",
   "command.cpm.reload": "重新加载了%d个玩家的模型",
   "command.cpm.select": "将%d个玩家的模型设置为%s",
   "command.cpm.clear": "已清除%d个玩家的模型",
-  "command.cpm.usage": "/cpm <refresh|list|reload|select|clear> ...",
+  "command.cpm.usage": "/cpm <model|accessory|scale> ...",
 
   "gui.cpm.title": "自定义模型选择界面",
   "gui.cpm.slider": "模型大小",
   "gui.cpm.clipboard": "模型ID已复制到剪切板",
   "gui.cpm.reset": "重置",
   "gui.cpm.clear": "清除",
+  "gui.cpm.model": "生物模型",
+  "gui.cpm.accessory": "饰品模型",
   "gui.cpm.model.name": "名称：%s",
   "gui.cpm.model.version": "版本：%s",
   "gui.cpm.model.author": "作者：%s",
   "gui.cpm.model.local": "本地模型",
-  "gui.cpm.model.edit": "编辑中"
+  "gui.cpm.model.edit": "编辑中",
+
+  "itemGroup.cpm": "自定义玩家模型",
+  "itemGroup.cpm.cpm": "自定义玩家模型",
+  "item.cpm.transformation_wand": "变形魔杖"
 }

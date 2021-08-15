@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.script.*;
 import java.util.List;
@@ -32,6 +33,7 @@ public class ModelPack extends ModelInfo {
     final List<ParticleEmitter> particleEmitters = Lists.newArrayList();
     final List<ItemModel> itemModels = Lists.newArrayList();
     final Map<HandSide, List<String>> firstPersonBones = Maps.newEnumMap(HandSide.class);
+    final Map<EnumAttachment, List<String>> addons = Maps.newEnumMap(EnumAttachment.class);
     String eyePositionBone = "";
     CompiledScript animScript;
     public float shadowSize = -1;
@@ -53,10 +55,7 @@ public class ModelPack extends ModelInfo {
         return textures.containsKey(texture);
     }
 
-    public ModelInstance instantiate(LivingEntity entity) {
-        ModelInstance instance = new ModelInstance(this, entity);
-        instance.skeleton = skeletonType.instantiate(skeletonParam);
-
+    private void instantiateBase(ModelBase instance) {
         for (Map.Entry<String, List<ModelPart>> entry : modelParts.entrySet()) {
             for (ModelPart model : entry.getValue()) {
                 ModelPart.Instance modelInstance = model.instantiate(instance);
@@ -70,6 +69,51 @@ public class ModelPack extends ModelInfo {
             }
         }
 
+        for (ParticleEmitter particleEmitter : particleEmitters) {
+            instance.particleEmitters.put(particleEmitter.name, particleEmitter.instantiate(instance));
+        }
+
+        for (ItemModel itemModel : itemModels) {
+            instance.itemModels.put(itemModel.name, itemModel.instantiate(instance));
+        }
+
+        instance.scriptContext = new SimpleScriptContext();
+        instance.scriptContext.setBindings(CPMMod.cpmClient.scriptEngine.createBindings(), ScriptContext.ENGINE_SCOPE);
+        try {
+            if (animScript != null) {
+                animScript.eval(instance.scriptContext);
+                Bindings bindings = instance.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE);
+                instance.initFunc = (JSObject) bindings.get("init");
+                instance.updateFunc = (JSObject) bindings.get("update");
+                instance.tickFunc = (JSObject) bindings.get("tick");
+            }
+        } catch (ScriptException e) {
+            CPMMod.warn(new TranslatableException("error.cpm.script.eval", e, name));
+        }
+    }
+
+    public AccessoryInstance instantiateAccessory(LivingEntity entity) {
+        AccessoryInstance instance = new AccessoryInstance(this, entity);
+        instantiateBase(instance);
+
+        for (EnumAttachment attachment : addons.keySet()) {
+            for (String boneName : addons.get(attachment)) {
+                ModelBone.Instance bone = instance.boneMap.get(boneName);
+                if (bone == null) continue;
+
+                instance.addons.computeIfAbsent(attachment, k -> Lists.newArrayList()).add(bone);
+            }
+        }
+
+        instance.initMatrix();
+        instance.evaluateAnimation(instance.initFunc, defaultScale);
+        return instance;
+    }
+
+    public ModelInstance instantiateModel(LivingEntity entity) {
+        ModelInstance instance = new ModelInstance(this, entity);
+        instance.skeleton = skeletonType.instantiate(skeletonParam);
+        instantiateBase(instance);
         instance.stuckBones = instance.boneList.stream().filter(bone -> bone.modelBone != null
                 && !bone.modelBone.boxes.isEmpty()).collect(Collectors.toList());
 
@@ -113,30 +157,8 @@ public class ModelPack extends ModelInfo {
         if (instance.eyePositionBone != null)
             instance.eyePositionBone.setCalculateTransform();
 
-        for (ParticleEmitter particleEmitter : particleEmitters) {
-            instance.particleEmitters.put(particleEmitter.name, particleEmitter.instantiate(instance));
-        }
-
-        for (ItemModel itemModel : itemModels) {
-            instance.itemModels.put(itemModel.name, itemModel.instantiate(instance));
-        }
-
-        instance.scriptContext = new SimpleScriptContext();
-        instance.scriptContext.setBindings(CPMMod.cpmClient.scriptEngine.createBindings(), ScriptContext.ENGINE_SCOPE);
-        try {
-            if (animScript != null) {
-                animScript.eval(instance.scriptContext);
-                Bindings bindings = instance.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE);
-                instance.initFunc = (JSObject) bindings.get("init");
-                instance.updateFunc = (JSObject) bindings.get("update");
-                instance.tickFunc = (JSObject) bindings.get("tick");
-
-                instance.evaluateAnimation(instance.initFunc, defaultScale);
-            }
-        } catch (ScriptException e) {
-            CPMMod.warn(new TranslatableException("error.cpm.script.eval", e, name));
-        }
-
+        instance.initMatrix();
+        instance.evaluateAnimation(instance.initFunc, defaultScale);
         return instance;
     }
 
@@ -144,5 +166,11 @@ public class ModelPack extends ModelInfo {
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
         for (ResourceLocation texture : textures.values())
             textureManager.release(texture);
+    }
+
+    public void validate() {
+        super.validate();
+        if (!isAccessory && skeletonType == null)
+            throw new TranslatableException("");
     }
 }

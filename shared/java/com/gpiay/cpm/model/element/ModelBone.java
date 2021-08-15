@@ -2,6 +2,7 @@ package com.gpiay.cpm.model.element;
 
 import com.google.common.collect.Lists;
 import com.gpiay.cpm.model.IComponent;
+import com.gpiay.cpm.model.ModelBase;
 import com.gpiay.cpm.model.ModelInstance;
 import com.gpiay.cpm.util.math.Quat4d;
 import com.gpiay.cpm.util.math.Vector3d;
@@ -23,7 +24,7 @@ public class ModelBone extends ModelElement {
     public List<ModelRenderer> boxes = Lists.newArrayList();
 
     @Override
-    public Instance instantiate(ModelInstance model) {
+    public Instance instantiate(ModelBase model) {
         Instance bone = null;
         if (parentName.equals("none") && name.endsWith("_c")) {
             String orinName = name.substring(0, name.length() - 2);
@@ -52,7 +53,7 @@ public class ModelBone extends ModelElement {
         } else bone.position.sub(0, 24, 0);
 
         bone.position.scl(1, -1, 1).scl(0.0625f);
-        if (parentInfo == null)
+        if (parentInfo == null && bone.parent != null)
             bone.position.sub(bone.parent.getPosition());
 
         bone.rotation = new Vector3d(rotation.y, rotation.x, rotation.z);
@@ -64,7 +65,7 @@ public class ModelBone extends ModelElement {
     }
 
     public static class Instance extends ModelElement.Instance implements IModelBone, ModelElement.IParented, IComponent {
-        final IModelBone parent;
+        public IModelBone parent;
 
         public Vector3d position;
         public Vector3d rotation;
@@ -81,7 +82,7 @@ public class ModelBone extends ModelElement {
         public Vector3d velocity = Vector3d.Zero.cpy();
         public boolean calculateTransform = false;
 
-        public Instance(String name, ModelInstance model, IModelBone parent, ModelBone modelBone) {
+        public Instance(String name, ModelBase model, IModelBone parent, ModelBone modelBone) {
             super(name, model);
             this.parent = parent;
             this.modelBone = modelBone;

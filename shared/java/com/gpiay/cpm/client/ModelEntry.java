@@ -10,20 +10,18 @@ import net.minecraft.util.text.TranslationTextComponent;
 import java.util.List;
 
 public class ModelEntry {
-    public final String id;
     public final ModelInfo info;
     public final boolean isLocal;
     public boolean isEditing = false;
     private List<IFormattableTextComponent> modelInfo;
 
-    public ModelEntry(String id, ModelInfo info, boolean local) {
-        this.id = id;
+    public ModelEntry(ModelInfo info, boolean local) {
         this.info = info;
         this.isLocal = local;
     }
 
     public boolean search(String text) {
-        if (id.contains(text)) return true;
+        if (info.id.contains(text)) return true;
         if (info.getName().contains(text)) return true;
         if (info.getVersion().contains(text)) return true;
         if (info.getDescription().contains(text)) return true;
@@ -43,6 +41,7 @@ public class ModelEntry {
         if (modelInfo == null) {
             modelInfo = Lists.newArrayListWithCapacity(5);
             modelInfo.add(setColor(new TranslationTextComponent("gui.cpm.model.name", info.getName()), TextFormatting.GOLD));
+            modelInfo.add(setColor(new TranslationTextComponent(info.isAccessory ? "gui.cpm.accessory" : "gui.cpm.model"), TextFormatting.WHITE));
             if (!info.getVersion().isEmpty())
                 modelInfo.add(setColor(new TranslationTextComponent("gui.cpm.model.version", info.getVersion()), TextFormatting.WHITE));
             if (!info.getAuthor().isEmpty())
