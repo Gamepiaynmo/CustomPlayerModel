@@ -21,11 +21,12 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '2.2.1-forge-mc1.16.5-beta'
+version = '2.2.2-forge-mc1.16.5-beta'
 group = 'com.gpiay.cpm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cpm'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+//java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -117,6 +118,20 @@ sourceSets {
     }
 }
 
+repositories {
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 Maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
@@ -126,6 +141,8 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
+//    implementation fg.deobf(':obfuscate:0.6.2-1.16.3')
+    implementation fg.deobf("curse.maven:obfuscate-289380:3336021")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

@@ -56,3 +56,10 @@ Customize player/entity models in Minecraft using JSON & JavaScript.
     versionRange="[1.16.5,1.17)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.cpm]]
+    modId="obfuscate"
+    mandatory=true
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+    versionRange="[0.6.2,)"
+    ordering="NONE"
+    side="CLIENT"

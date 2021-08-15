@@ -1,7 +1,9 @@
-package com.gpiay.cpm.network;
+package com.gpiay.cpm.network.packet;
 
 import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.entity.AttachmentProvider;
+import com.gpiay.cpm.network.PacketEncoder;
+import com.gpiay.cpm.network.TaskScheduler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;

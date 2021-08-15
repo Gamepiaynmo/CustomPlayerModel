@@ -4,7 +4,7 @@ import com.gpiay.cpm.CPMMod;
 import com.gpiay.cpm.entity.AttachmentProvider;
 import com.gpiay.cpm.entity.ServerCPMCapability;
 import com.gpiay.cpm.network.NetworkHandler;
-import com.gpiay.cpm.network.UpdateModelPacket;
+import com.gpiay.cpm.network.packet.UpdateModelPacket;
 import com.gpiay.cpm.entity.CPMCapabilityProvider;
 import com.gpiay.cpm.server.CPMCommand;
 import net.minecraft.entity.Entity;

@@ -3,6 +3,7 @@ package com.gpiay.cpm;
 import com.gpiay.cpm.client.CPMClient;
 import com.gpiay.cpm.config.CPMConfig;
 import com.gpiay.cpm.item.TransformationItem;
+import com.gpiay.cpm.item.TransformationWand;
 import com.gpiay.cpm.network.NetworkHandler;
 import com.gpiay.cpm.server.CPMCommand;
 import com.gpiay.cpm.server.CPMServer;
@@ -25,7 +26,7 @@ import net.minecraft.util.registry.Registry;
 import org.lwjgl.glfw.GLFW;
 
 public class CPMEntry implements ModInitializer, ClientModInitializer, DedicatedServerModInitializer {
-	public static final Item transformationWand = new TransformationItem(new FabricItemSettings().durability(10));
+	public static final Item transformationWand = new TransformationWand(new FabricItemSettings().durability(10));
 
 	public static final ItemGroup CPM_ITEMS = FabricItemGroupBuilder.create(
 				new ResourceLocation(CPMMod.MOD_ID, "cpm"))

@@ -1,17 +1,18 @@
 {
-	"required": true,
-	"package": "com.gpiay.cpm.mixin",
-	"compatibilityLevel": "JAVA_8",
-	"refmap": "cpm.refmap.json",
-	"mixins": [
-		"MixinLivingEntity",
-		"MixinPlayerEntity",
-		"MixinEntity"
-	],
-	"client": [
-		"MixinLivingRenderer",
-		"MixinPlayerRenderer",
-		"MixinActiveRenderInfo"
-	],
-	"minVersion": "0.8.2"
+  "required": true,
+  "package": "com.gpiay.cpm.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "cpm.refmap.json",
+  "mixins": [
+    "MixinEntity",
+    "MixinLivingEntity",
+    "MixinPlayerEntity"
+  ],
+  "client": [
+    "MixinActiveRenderInfo",
+    "MixinPlayerRenderer",
+    "MixinLivingRenderer",
+    "ObfuscateHooks"
+  ],
+  "minVersion": "0.8.2"
 }

@@ -14,7 +14,7 @@ public class CPMItems extends ItemGroup {
 
     public static final RegistryObject<Item> transformationWand = ITEMS.register(
             "transformation_wand",
-            () -> new TransformationItem(new Item.Properties()
+            () -> new TransformationWand(new Item.Properties()
                     .tab(CPMItems.ITEM_GROUP)
                     .durability(10)));
 
