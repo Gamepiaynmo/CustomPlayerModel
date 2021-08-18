@@ -63,8 +63,8 @@ public class ModelInstance extends ModelBase {
     @Override
     public void initMatrix() {
         if (physicsEnabled) {
-            skeleton.setupModelAnim(entity, entity.animationPosition, entity.animationSpeed, entity.tickCount + 1,
-                    calculateYaw(), entity.xRot);
+            skeleton.update(entity, entity.animationPosition, entity.animationSpeed, entity.tickCount + 1,
+                    calculateYaw(), entity.xRot, 1, attach.getScale(), false);
             updateModelViewMatrix();
         }
 

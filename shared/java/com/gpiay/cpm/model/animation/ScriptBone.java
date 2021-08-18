@@ -68,6 +68,11 @@ public class ScriptBone {
             modelBone.scale.z = z;
         }
     }
+    public void setScale(double value) {
+        if (isModel) {
+            modelBone.scale.x = modelBone.scale.y = modelBone.scale.z = value;
+        }
+    }
 
     public void setColorR(double value) { if (isModel) modelBone.color.x = value; }
     public void setColorG(double value) { if (isModel) modelBone.color.y = value; }

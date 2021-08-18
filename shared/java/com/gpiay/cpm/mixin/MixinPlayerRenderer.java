@@ -12,6 +12,7 @@ import net.minecraft.util.HandSide;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerRenderer.class)
@@ -42,5 +43,19 @@ public abstract class MixinPlayerRenderer extends LivingRenderer<AbstractClientP
             if (attachment.renderFirstPerson(matrixStack, renderType, light, HandSide.LEFT))
                 info.cancel();
         });
+    }
+
+    // Fix physics bones disappearing while elytra flying. Parameter a is sometimes larger than 1 resulting a NaN matrix.
+    @Redirect(
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/lang/Math;acos(D)D"
+            ),
+            method = "setupRotations(Lnet/minecraft/client/entity/player/AbstractClientPlayerEntity;Lcom/mojang/blaze3d/matrix/MatrixStack;FFF)V",
+            expect = 0
+    )
+    private double safeAcos(double a) {
+        if (a > 1) return 0;
+        return Math.acos(a);
     }
 }

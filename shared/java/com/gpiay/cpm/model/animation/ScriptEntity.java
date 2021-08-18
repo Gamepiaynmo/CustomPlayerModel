@@ -74,13 +74,13 @@ public class ScriptEntity {
     public double getFoodLevel() { return as(PlayerEntity.class, entity -> (double) entity.getFoodData().getFoodLevel(), 0); }
     public double getSaturationLevel() { return as(PlayerEntity.class, entity -> (double) entity.getFoodData().getSaturationLevel(), 0); }
     public double getHurtTime() { return entity.hurtTime - partial; }
-    public double getPosX() { return MathHelper.lerp(entity.xo, entity.getX(), partial); }
-    public double getPosY() { return MathHelper.lerp(entity.yo, entity.getY(), partial); }
-    public double getPosZ() { return MathHelper.lerp(entity.zo, entity.getZ(), partial); }
+    public double getPosX() { return MathHelper.lerp(partial, entity.xo, entity.getX()); }
+    public double getPosY() { return MathHelper.lerp(partial, entity.yo, entity.getY()); }
+    public double getPosZ() { return MathHelper.lerp(partial, entity.zo, entity.getZ()); }
     public double getMotionX() { return entity.getDeltaMovement().x; }
     public double getMotionY() { return entity.getDeltaMovement().y; }
     public double getMotionZ() { return entity.getDeltaMovement().z; }
-    public double getBodyYaw() { return MathHelper.lerp(entity.yBodyRotO, entity.yBodyRot, partial); }
+    public double getBodyYaw() { return MathHelper.lerp(partial, entity.yBodyRotO, entity.yBodyRot); }
     public double getSwingProgress() { return entity.getAttackAnim(partial); }
     public double getAttackAnim() { return entity.getAttackAnim(partial); }
 

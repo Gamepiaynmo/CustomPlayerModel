@@ -71,9 +71,6 @@ public abstract class Skeleton<M extends EntityModel<LivingEntity>> {
 #endif
         entityModel.young = entity.isBaby();
 
-        if (partial == 1.0)
-            setupModelAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
-
         entityModel.prepareMobModel(entity, animPos, animSpeed, partial);
         entityModel.setupAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
 

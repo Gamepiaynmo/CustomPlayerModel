@@ -1,6 +1,7 @@
 package com.gpiay.cpm.model;
 
 import com.google.common.collect.Maps;
+import com.gpiay.cpm.model.element.IModelBone;
 import com.gpiay.cpm.model.element.ModelBone;
 import com.gpiay.cpm.util.math.Matrix4d;
 import com.gpiay.cpm.util.math.Vector3d;
@@ -44,6 +45,14 @@ public class AccessoryInstance extends ModelBase {
         for (ModelBone.Instance bone : boneList)
             if (!parentMap.containsKey(bone))
                 transform.put(bone, new MatrixGroup(physicsEnabled ? bone.getTransform().mulLeft(transform.get(bone.getParent()).partial) : new Matrix4d()));
+    }
+
+    @Override
+    public IModelBone getBone(String boneId) {
+        IModelBone bone = super.getBone(boneId);
+        if (bone == null)
+            bone = attach.getModel().skeleton.getBone(boneId);
+        return bone;
     }
 
     protected Matrix4d getParentPartialTransform(ModelBone.Instance bone) {

@@ -92,7 +92,6 @@ public class BipedBaseSkeleton<M extends CustomBipedModel> extends Skeleton<M> {
             entityModel.attackTime = 0.0f;
             entityModel.crouching = false;
             entityModel.swimAmount = 0.0f;
-            setupModelAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
             entityModel.setupAnim(entity, animPos, animSpeed, age, headYaw, headPitch);
             entityModel.leftArm.xRot = 0.0f;
             entityModel.rightArm.xRot = 0.0f;

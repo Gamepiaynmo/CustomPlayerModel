@@ -105,8 +105,8 @@ public class ModelPack extends ModelInfo {
             }
         }
 
-        instance.initMatrix();
         instance.evaluateAnimation(instance.initFunc, defaultScale);
+        instance.initMatrix();
         return instance;
     }
 
@@ -157,8 +157,8 @@ public class ModelPack extends ModelInfo {
         if (instance.eyePositionBone != null)
             instance.eyePositionBone.setCalculateTransform();
 
-        instance.initMatrix();
         instance.evaluateAnimation(instance.initFunc, defaultScale);
+        instance.initMatrix();
         return instance;
     }
 

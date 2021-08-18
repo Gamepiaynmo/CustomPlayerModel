@@ -74,8 +74,16 @@ public class CustomBipedModel extends BipedModel<LivingEntity> {
     @Override
     public void setupAnim(LivingEntity p_225597_1_, float p_225597_2_, float p_225597_3_, float p_225597_4_, float p_225597_5_, float p_225597_6_) {
         BipedModel<LivingEntity> model = getModel(p_225597_1_);
-        if (partial == 1.0)
-            super.setupAnim(p_225597_1_, p_225597_2_, p_225597_3_, p_225597_4_, p_225597_5_, p_225597_6_);
+        if (model != null) {
+            model.attackTime = attackTime;
+            model.riding = riding;
+            model.young = young;
+            model.crouching = crouching;
+            model.swimAmount = swimAmount;
+            model.leftArmPose = leftArmPose;
+            model.rightArmPose = rightArmPose;
+            model.setupAnim(p_225597_1_, p_225597_2_, p_225597_3_, p_225597_4_, p_225597_5_, p_225597_6_);
+        }
 
         if (model == null) {
             boolean lvt_7_1_ = p_225597_1_.getFallFlyingTicks() > 4;
