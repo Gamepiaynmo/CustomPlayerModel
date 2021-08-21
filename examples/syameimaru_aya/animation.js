@@ -1,10 +1,6 @@
-var blink, left_wing, right_wing;
+var blink, left_wing, right_wing, left_item;
 
 function init(entity, model) {
-	for (var i = 1; i <= 14; i++) {
-		model.getBone("crystal_" + i).physicalize(0, 3, 0.8, 10, 0);
-	}
-
 	var scale = 0.75;
 	var bones = [
 		model.getBone("builtin_chestplate_body_body"),
@@ -32,11 +28,13 @@ function init(entity, model) {
 	blink = model.getBone("blink");
 	left_wing = model.getBone("wingLeft");
 	right_wing = model.getBone("wingRight");
+	left_item = model.getBone("item");
 }
 
 function update(entity, model) {
 	left_wing.setRotationY(Math.cos(entity.getAge() * 0.3) * 20 - 60);
 	right_wing.setRotationY(-Math.cos(entity.getAge() * 0.3) * 20 + 60);
+	left_item.setVisible(entity.getLeftHandItem().isEmpty());
 }
 
 function tick(entity, model) {

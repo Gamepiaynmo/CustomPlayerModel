@@ -1,0 +1,17 @@
+{
+	"name": "Katana",
+	"version": "1.0",
+	"author": ["Succinum", "ZeniCrow", "Paulzzh", "Tian_mi"],
+	"description": "Katana from Youmu model",
+	"accessory": true,
+	"parts": [
+		{
+			"double_face": true,
+			"name": "katana",
+			"texture": "katana"
+		}
+	],
+	"addons": {
+		"dachi": "chestplate_body"
+	}
+}

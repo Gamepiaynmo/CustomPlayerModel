@@ -1,0 +1,17 @@
+{
+	"name": "Marisa Hat",
+	"version": "1.0",
+	"author": ["Succinum", "ZeniCrow", "Paulzzh", "Tian_mi"],
+	"description": "Hat from Marisa model",
+	"accessory": true,
+	"parts": [
+		{
+			"double_face": true,
+			"name": "hat",
+			"texture": "hat"
+		}
+	],
+	"addons": {
+		"hat": "helmet"
+	}
+}

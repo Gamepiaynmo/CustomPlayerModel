@@ -1,8 +1,8 @@
 {
-	"name": "Flandre Scarlet",
+	"name": "Konpaku Youmu",
 	"version": "1.0",
 	"author": ["Succinum", "ZeniCrow", "Paulzzh", "Tian_mi"],
-	"description": "Flandre Scarlet from Touhou Project",
+	"description": "Konpaku Youmu from Touhou Project",
 	"url": "https://www.curseforge.com/minecraft/mc-mods/touhou-little-maid",
 	"skeleton": {
 		"type": "biped",
@@ -23,8 +23,8 @@
 	"parts": [
 		{
 			"double_face": true,
-			"name": "flandre_scarlet",
-			"texture": "flandre_scarlet"
+			"name": "konpaku_youmu",
+			"texture": "konpaku_youmu"
 		}
 	],
 	"size": {

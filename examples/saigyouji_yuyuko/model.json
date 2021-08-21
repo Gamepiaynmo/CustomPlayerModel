@@ -1,8 +1,8 @@
 {
-	"name": "Flandre Scarlet",
+	"name": "Saigyouji Yuyuko",
 	"version": "1.0",
 	"author": ["Succinum", "ZeniCrow", "Paulzzh", "Tian_mi"],
-	"description": "Flandre Scarlet from Touhou Project",
+	"description": "Saigyouji Yuyuko from Touhou Project",
 	"url": "https://www.curseforge.com/minecraft/mc-mods/touhou-little-maid",
 	"skeleton": {
 		"type": "biped",
@@ -23,8 +23,8 @@
 	"parts": [
 		{
 			"double_face": true,
-			"name": "flandre_scarlet",
-			"texture": "flandre_scarlet"
+			"name": "saigyouji_yuyuko",
+			"texture": "saigyouji_yuyuko"
 		}
 	],
 	"size": {

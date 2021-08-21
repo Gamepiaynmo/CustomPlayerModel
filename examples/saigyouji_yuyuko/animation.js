@@ -1,10 +1,6 @@
-var blink, left_wing, right_wing;
+var blink, sin, cos, _sin, _cos, left_wings, right_wings;
 
 function init(entity, model) {
-	for (var i = 1; i <= 14; i++) {
-		model.getBone("crystal_" + i).physicalize(0, 3, 0.8, 10, 0);
-	}
-
 	var scale = 0.75;
 	var bones = [
 		model.getBone("builtin_chestplate_body_body"),
@@ -30,13 +26,33 @@ function init(entity, model) {
 	bones[0].setScaleZ(1.05);
 
 	blink = model.getBone("blink");
-	left_wing = model.getBone("wingLeft");
-	right_wing = model.getBone("wingRight");
+	sin = model.getBone("sinFloat");
+	cos = model.getBone("cosFloat");
+	_sin = model.getBone("_sinFloat");
+	_cos = model.getBone("_cosFloat");
+	left_wings = [
+		model.getBone("wingLeft"),
+		model.getBone("wingLeft2"),
+		model.getBone("wingLeft3"),
+		model.getBone("wingLeft4"),
+	];
+	right_wings = [
+		model.getBone("wingRight"),
+		model.getBone("wingRight2"),
+		model.getBone("wingRight3"),
+		model.getBone("wingRight4"),
+	];
 }
 
 function update(entity, model) {
-	left_wing.setRotationY(Math.cos(entity.getAge() * 0.3) * 20 - 60);
-	right_wing.setRotationY(-Math.cos(entity.getAge() * 0.3) * 20 + 60);
+	sin.setPositionY(-4 + Math.sin(entity.getAge() / 9) * 2);
+	cos.setPositionY(-14 + Math.cos(entity.getAge() / 10.5) * 2.5);
+	_sin.setPositionY(-15 - Math.sin(entity.getAge() / 11) * 1.8);
+	_cos.setPositionY(-2 - Math.cos(entity.getAge() / 10) * 2.2);
+	for (var i in left_wings) {
+		left_wings[i].setRotationY(Math.cos(entity.getAge() + i * 10) * 30 - 60);
+		right_wings[i].setRotationY(-Math.cos(entity.getAge() + i * 10) * 30 + 60);
+	}
 }
 
 function tick(entity, model) {

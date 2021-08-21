@@ -1,8 +1,8 @@
 {
-	"name": "Flandre Scarlet",
+	"name": "Kirisame Marisa",
 	"version": "1.0",
 	"author": ["Succinum", "ZeniCrow", "Paulzzh", "Tian_mi"],
-	"description": "Flandre Scarlet from Touhou Project",
+	"description": "Kirisame Marisa from Touhou Project",
 	"url": "https://www.curseforge.com/minecraft/mc-mods/touhou-little-maid",
 	"skeleton": {
 		"type": "biped",
@@ -23,8 +23,8 @@
 	"parts": [
 		{
 			"double_face": true,
-			"name": "flandre_scarlet",
-			"texture": "flandre_scarlet"
+			"name": "kirisame_marisa",
+			"texture": "kirisame_marisa"
 		}
 	],
 	"size": {

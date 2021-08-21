@@ -1,10 +1,6 @@
-var blink, left_wing, right_wing;
+var blink, crack, left_item, hide;
 
 function init(entity, model) {
-	for (var i = 1; i <= 14; i++) {
-		model.getBone("crystal_" + i).physicalize(0, 3, 0.8, 10, 0);
-	}
-
 	var scale = 0.75;
 	var bones = [
 		model.getBone("builtin_chestplate_body_body"),
@@ -30,15 +26,26 @@ function init(entity, model) {
 	bones[0].setScaleZ(1.05);
 
 	blink = model.getBone("blink");
-	left_wing = model.getBone("wingLeft");
-	right_wing = model.getBone("wingRight");
+	crack = model.getBone("crack");
+	left_item = model.getBone("left_item");
+	hide = [
+		model.getBone("bone12"),
+		model.getBone("bone13"),
+		model.getBone("bone14"),
+		model.getBone("bone15"),
+		model.getBone("bone16"),
+		model.getBone("bone17"),
+	]
 }
 
 function update(entity, model) {
-	left_wing.setRotationY(Math.cos(entity.getAge() * 0.3) * 20 - 60);
-	right_wing.setRotationY(-Math.cos(entity.getAge() * 0.3) * 20 + 60);
-}
+	blink.setRotationY(entity.getAge());
+	crack.setRotationY(entity.getAge());
+	left_item.setVisible(entity.getLeftHandItem().isEmpty());
 
-function tick(entity, model) {
-	blink.setVisible(entity.getAge() % 60 < 5);
+	var time = entity.getAge() % 120;
+	alpha = time > 20 ? 0 : (1 + Math.abs(10 - time) / -10);
+	for (var i in hide) {
+		hide[i].setColorA(alpha);
+	}
 }

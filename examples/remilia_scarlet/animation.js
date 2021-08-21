@@ -1,10 +1,6 @@
 var blink, left_wing, right_wing;
 
 function init(entity, model) {
-	for (var i = 1; i <= 14; i++) {
-		model.getBone("crystal_" + i).physicalize(0, 3, 0.8, 10, 0);
-	}
-
 	var scale = 0.75;
 	var bones = [
 		model.getBone("builtin_chestplate_body_body"),
