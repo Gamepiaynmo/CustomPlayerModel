@@ -218,7 +218,7 @@ public abstract class ClientCPMAttachment extends CPMAttachment {
     @Override
     public boolean renderFirstPerson(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, HandSide hand) {
         if (model != null && model.isReady()) {
-            model.renderFirstPerson(matrixStackIn, bufferIn, packedLightIn, HandSide.RIGHT);
+            model.renderFirstPerson(matrixStackIn, bufferIn, packedLightIn, hand);
             return true;
         }
         return false;

@@ -99,6 +99,7 @@ public class ScriptEntity {
     public boolean isCrouching() { return entity.isCrouching(); }
     public boolean isSprinting() { return entity.isSprinting(); }
     public boolean isWet() { return entity.isInWaterRainOrBubble(); }
+    public boolean isClimbing() { return entity.onClimbable(); }
 
     public ScriptItem getMainHandItem() { return new ScriptItem(entity.getMainHandItem()); }
     public ScriptItem getOffHandItem() { return new ScriptItem(entity.getOffhandItem()); }
