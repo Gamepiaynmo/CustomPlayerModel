@@ -1,5 +1,6 @@
 package com.gpiay.cpm.config;
 
+import com.gpiay.cpm.CPMMod;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -12,8 +13,8 @@ public class CPMConfig {
     public static boolean hideArmors() { return ClientConfig.HIDE_ARMORS.get(); }
     public static boolean sendModels() { return ClientConfig.SEND_MODELS.get(); }
 
-    public static boolean customEyeHeight() { return ServerConfig.CUSTOM_EYE_HEIGHT.get(); }
-    public static boolean customBoundingBox() { return ServerConfig.CUSTOM_BOUNDING_BOX.get(); }
-    public static boolean customEyePosition() { return ServerConfig.CUSTOM_EYE_POSITION.get(); }
-    public static boolean receiveModels() { return ServerConfig.RECEIVE_MODELS.get(); }
+    public static boolean customEyeHeight() { return CPMMod.cpmClient.isServerModded && ServerConfig.CUSTOM_EYE_HEIGHT.get(); }
+    public static boolean customBoundingBox() { return CPMMod.cpmClient.isServerModded && ServerConfig.CUSTOM_BOUNDING_BOX.get(); }
+    public static boolean customEyePosition() { return CPMMod.cpmClient.isServerModded && ServerConfig.CUSTOM_EYE_POSITION.get(); }
+    public static boolean receiveModels() { return CPMMod.cpmClient.isServerModded && ServerConfig.RECEIVE_MODELS.get(); }
 }

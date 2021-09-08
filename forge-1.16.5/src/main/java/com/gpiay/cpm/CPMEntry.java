@@ -57,6 +57,9 @@ public class CPMEntry {
         PermissionAPI.registerNode("cpm.command.refreshModels", CommonConfig.REFRESH.get(), "Permission for refreshing local model files.");
         PermissionAPI.registerNode("cpm.command.createItem", CommonConfig.CREATE_ITEM.get(), "Permission for creating model changing items.");
 
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
+                () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+
         for (CommonConfig.ModelPermission node : CommonConfig.MODEL_PERMISSIONS.get()) {
             String permissionNode = "cpm.model." + node.node;
             PermissionAPI.registerNode(permissionNode, DefaultPermissionLevel.ALL, "Model Permission Node");
@@ -66,8 +69,6 @@ public class CPMEntry {
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.CONFIG);
-            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
-                    () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
             CPMMod.cpmClient = new CPMClient();
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
 

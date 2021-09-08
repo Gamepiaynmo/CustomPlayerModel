@@ -19,8 +19,8 @@ public class NetworkHandler {
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(CPMMod.MOD_ID, "main"),
             () -> VERSION,
-            VERSION::equals,
-            VERSION::equals
+            s -> true,
+            s -> true
     );
 
     private static int ID = 0;

@@ -10,6 +10,8 @@ import com.gpiay.cpm.util.math.Matrix4d;
 import com.mrcrayfish.obfuscate.client.event.PlayerModelEvent;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,5 +40,21 @@ public class ClientEvents {
         if (modelInstance != null && modelInstance.isReady()) {
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public void onPlayerRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
+        AttachmentProvider.getEntityAttachment(event.getOldPlayer()).ifPresent((oldCap) -> {
+            AttachmentProvider.getEntityAttachment(event.getNewPlayer()).ifPresent((newCap) -> {
+                CompoundNBT nbt = new CompoundNBT();
+                oldCap.writeToNBT(nbt);
+                newCap.readFromNBT(nbt);
+            });
+        });
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogout(ClientPlayerNetworkEvent.LoggedOutEvent event) {
+        CPMMod.cpmClient.isServerModded = false;
     }
 }

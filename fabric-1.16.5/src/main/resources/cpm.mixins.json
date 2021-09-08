@@ -14,7 +14,8 @@
     "MixinActiveRenderInfo",
     "MixinLivingRenderer",
     "MixinPlayerRenderer",
-    "TextureManagerFix"
+    "TextureManagerFix",
+    "LogoutHook"
   ],
   "injectors": {
     "defaultRequire": 1

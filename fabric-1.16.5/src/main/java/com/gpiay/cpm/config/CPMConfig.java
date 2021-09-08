@@ -1,6 +1,7 @@
 package com.gpiay.cpm.config;
 
 import com.google.common.collect.Maps;
+import com.gpiay.cpm.CPMMod;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -38,8 +39,8 @@ public class CPMConfig {
     public static boolean hideArmors() { return CONFIGS.client.hideArmors; }
     public static boolean sendModels() { return CONFIGS.client.sendModels; }
 
-    public static boolean customEyeHeight() { return CONFIGS.server.customEyeHeight && serverConfigs.customEyeHeight; }
-    public static boolean customBoundingBox() { return CONFIGS.server.customBoundingBox && serverConfigs.customBoundingBox; }
-    public static boolean customEyePosition() { return CONFIGS.server.customEyePosition && serverConfigs.customEyePosition; }
-    public static boolean receiveModels() { return CONFIGS.server.receiveModels && serverConfigs.receiveModels; }
+    public static boolean customEyeHeight() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.customEyeHeight && serverConfigs.customEyeHeight; }
+    public static boolean customBoundingBox() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.customBoundingBox && serverConfigs.customBoundingBox; }
+    public static boolean customEyePosition() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.customEyePosition && serverConfigs.customEyePosition; }
+    public static boolean receiveModels() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.receiveModels && serverConfigs.receiveModels; }
 }

@@ -21,7 +21,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '2.2.3-forge-mc1.16.5-beta'
+version = '2.2.4-forge-mc1.16.5-beta'
 group = 'com.gpiay.cpm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'cpm'
 
