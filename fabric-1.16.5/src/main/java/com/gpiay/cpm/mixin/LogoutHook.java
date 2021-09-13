@@ -1,6 +1,7 @@
 package com.gpiay.cpm.mixin;
 
 import com.gpiay.cpm.CPMMod;
+import com.gpiay.cpm.config.CPMConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IWindowEventListener;
@@ -23,5 +24,6 @@ public abstract class LogoutHook extends RecursiveEventLoop<Runnable> implements
     )
     public void onClearLevel(Screen screen, CallbackInfo ci) {
         CPMMod.cpmClient.isServerModded = false;
+        CPMConfig.clearServerConfig();
     }
 }

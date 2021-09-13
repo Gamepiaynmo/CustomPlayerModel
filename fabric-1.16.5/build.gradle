@@ -32,10 +32,10 @@ repositories {
 sourceSets {
 	shared {
 		java {
-			srcDir "../../CustomPlayerModel-main/shared/java"
+			srcDir "../shared/java"
 		}
 		resources {
-			srcDir "../../CustomPlayerModel-main/shared/resources"
+			srcDir "../shared/resources"
 		}
 	}
 	main {

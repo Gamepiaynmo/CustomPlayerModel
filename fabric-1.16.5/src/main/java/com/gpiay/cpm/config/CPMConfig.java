@@ -18,10 +18,7 @@ public class CPMConfig {
         AutoConfig.register(Configs.class, Toml4jConfigSerializer::new);
         CONFIGS = AutoConfig.getConfigHolder(Configs.class).get();
 
-        serverConfigs.customEyeHeight = CONFIGS.server.customEyeHeight;
-        serverConfigs.customBoundingBox = CONFIGS.server.customBoundingBox;
-        serverConfigs.customEyePosition = CONFIGS.server.customEyePosition;
-        serverConfigs.receiveModels = CONFIGS.server.receiveModels;
+        clearServerConfig();
 
         permissions.put("cpm.command.selectSelf", CONFIGS.perm.selectSelf);
         permissions.put("cpm.command.selectOthers", CONFIGS.perm.selectOthers);
@@ -29,6 +26,13 @@ public class CPMConfig {
         permissions.put("cpm.command.scaleOthers", CONFIGS.perm.scaleOthers);
         permissions.put("cpm.command.refresh", CONFIGS.perm.refresh);
         permissions.put("cpm.command.createItem", CONFIGS.perm.createItem);
+    }
+
+    public static void clearServerConfig() {
+        serverConfigs.customEyeHeight = CONFIGS.server.customEyeHeight;
+        serverConfigs.customBoundingBox = CONFIGS.server.customBoundingBox;
+        serverConfigs.customEyePosition = CONFIGS.server.customEyePosition;
+        serverConfigs.receiveModels = CONFIGS.server.receiveModels;
     }
 
     public static boolean checkCommandPermission(ServerPlayerEntity player, String node) {
@@ -39,8 +43,8 @@ public class CPMConfig {
     public static boolean hideArmors() { return CONFIGS.client.hideArmors; }
     public static boolean sendModels() { return CONFIGS.client.sendModels; }
 
-    public static boolean customEyeHeight() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.customEyeHeight && serverConfigs.customEyeHeight; }
-    public static boolean customBoundingBox() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.customBoundingBox && serverConfigs.customBoundingBox; }
-    public static boolean customEyePosition() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.customEyePosition && serverConfigs.customEyePosition; }
-    public static boolean receiveModels() { return CPMMod.cpmClient.isServerModded && CONFIGS.server.receiveModels && serverConfigs.receiveModels; }
+    public static boolean customEyeHeight() { return serverConfigs.customEyeHeight; }
+    public static boolean customBoundingBox() { return serverConfigs.customBoundingBox; }
+    public static boolean customEyePosition() { return serverConfigs.customEyePosition; }
+    public static boolean receiveModels() { return serverConfigs.receiveModels; }
 }
